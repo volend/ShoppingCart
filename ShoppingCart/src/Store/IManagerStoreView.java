@@ -8,8 +8,11 @@ package Store;
  *
  * @author volen
  */
-public interface IManagerStoreView {
-    	void updateItem(String sku, Product product);
-	void removeItem(String sku);
-	void addItem(Product product);
+public interface IManagerStoreView extends IBaseStoreView {
+
+    void updateItem(String sku, Product product);
+
+    void removeItem(String sku);
+
+    void addItem(Product product);
 }

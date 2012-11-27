@@ -5,16 +5,17 @@
 package Repositories.UserRepository;
 
 import Store.ICustomerStoreView;
+import Store.IManagerStoreView;
 
 /**
  *
  * @author volen
  */
-public class Customer extends User {
-    
-    private final ICustomerStoreView mStoreView;
-    
-    public Customer(ICustomerStoreView customerStore, IUserRepository repository) {
+public class Manager extends User {
+
+    private final IManagerStoreView mStoreView;
+
+    public Manager(IManagerStoreView customerStore, IUserRepository repository) {
         super(repository);
         mStoreView = customerStore;
     }

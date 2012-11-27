@@ -34,6 +34,20 @@ public class Inventory implements Iterable<Product> {
         readProducts();
     }
 
+    Boolean addToCart(ShoppingCart userCart, Product product, int quantity) {
+        if (mRepository.reserveProduct(product.getSKU(), quantity)) {
+            userCart.addItem(product, quantity);
+            return true;
+        }
+        return false;
+    }
+
+    void removeFromCart(ShoppingCart userCart, Product product, int quantity)
+    {
+        userCart.removeItem(product);
+        mRepository.releaseProduct(product.getSKU(), quantity);
+    }
+
     // Strategy Pattern
     public void selectCategory(String category) {
 
@@ -116,9 +130,8 @@ public class Inventory implements Iterable<Product> {
     public Iterator<Product> iterator() {
         return mTemporaryProducts.iterator();
     }
-    
-    public int count()
-    {
+
+    public int count() {
         return mTemporaryProducts.size();
     }
 }

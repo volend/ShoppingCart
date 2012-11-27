@@ -16,7 +16,6 @@ public class Product {
     private final String mSKU;
     private String mTitle;
     private String mDescription;
-    private byte[] mImageStream;
     private BigDecimal mSalePrice;
     private Color mColor;
     private String mCategory;
@@ -59,20 +58,6 @@ public class Product {
      */
     public void setDescription(String mDescription) {
         this.mDescription = mDescription;
-    }
-
-    /**
-     * @return the mImageStream
-     */
-    public byte[] getImageStream() {
-        return mImageStream;
-    }
-
-    /**
-     * @param mImageStream the mImageStream to set
-     */
-    public void setImageStream(byte[] mImageStream) {
-        this.mImageStream = mImageStream;
     }
 
     /**

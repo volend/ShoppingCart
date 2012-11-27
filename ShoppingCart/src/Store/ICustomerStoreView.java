@@ -5,31 +5,21 @@
  */
 package Store;
 
-import Repositories.UserRepository.Customer;
-import Repositories.UserRepository.User;
+import Repositories.UserRepository.*;
+import java.util.Date;
 import java.util.Set;
 
 /**
  *
  * @author volen
  */
-public interface ICustomerStoreView {
+public interface ICustomerStoreView extends IBaseStoreView {
 
     Set<OrderDetails> getOrdersByCustomerEmail(String emailAddress);
 
-    Boolean applyCoupon(Coupon coupon);
-
-    String/*order number*/ placeOrder(Customer buyer, OrderDetails order);
-
-    OrderDetails getOrder(String orderNumber);
-
-    void requestOrderCancelatlion(String orderNumber);
-
-    void addToCart(ShoppingCart userCart, Product product, int quantity);
-
-    void removeFromCart(ShoppingCart userCart, Product product);
+    OrderDetails startOrder(Customer buyer, Date orderDate, BillingInformation payment, String customerEmail);
+    void completeOrder(OrderDetails order);
+    void requestOrderCancelatlion(OrderDetails order);
 
     Inventory getInventory();
-
-    User login(String email, String password);
 }

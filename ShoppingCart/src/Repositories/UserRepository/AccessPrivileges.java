@@ -2,14 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Store;
+package Repositories.UserRepository;
 
 /**
  *
  * @author volen
  */
-enum OrderState {
-    InProgress,
-    Completed,
-    Cancelled
+public enum AccessPrivileges {
+
+    Limited,
+    Full
 }

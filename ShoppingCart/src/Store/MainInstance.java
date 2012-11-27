@@ -53,12 +53,27 @@ public class MainInstance {
 
             @Override
             public Boolean reserveProduct(String sku, int count) {
-                throw new UnsupportedOperationException("Not supported yet.");
+                return true;
             }
 
             @Override
             public void releaseProduct(String sku, int count) {
-                throw new UnsupportedOperationException("Not supported yet.");
+               //
+            }
+
+            @Override
+            public void updateProductInfo(ProductInfo info) {
+               //
+            }
+
+            @Override
+            public void addNewProduct(ProductInfo info) {
+                //
+            }
+
+            @Override
+            public void removeProduct(ProductInfo info) {
+                //
             }
         };
 

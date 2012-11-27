@@ -4,67 +4,125 @@
  */
 package Repositories.UserRepository;
 
+import Store.Product;
+import Store.ShoppingCart;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  *
  * @author volen
  */
 public class User {
 
-    private final String mFirstName;
-    private final String mLastName;
-    private final String mEmailAddress;
-    private final String mPhoneNumber;
-    private String mAccessToken;
-    protected IUserRepository mRepository;
+    private final IUserRepository mRepository;
+    private final ShoppingCart mShoppingCart;
+    private UserInfo mUserInfo;
 
-    public User(UserInfo info, IUserRepository repository) {
-        mFirstName = info.FirstName;
-        mLastName = info.LastName;
-        mEmailAddress = info.EmailAddress;
-        mPhoneNumber = info.PhoneNumber;
+    public User(IUserRepository repository) {
         mRepository = repository;
+        mShoppingCart = new ShoppingCart();
+    }
+
+    public Set<BillingInformation> getBillingInfo() {
+        if (mUserInfo == null) {
+            return new HashSet<>();
+        }
+        return mRepository.getBillingInfo(mUserInfo);
+    }
+
+    public void addBillingInfo(BillingInformation info) {
+        if (mUserInfo == null) {
+            return;
+        }
+        mRepository.addBillingInfo(mUserInfo, info);
+    }
+
+    public void removeBillingInfo(BillingInformation info) {
+        if (mUserInfo == null) {
+            return;
+        }
+        mRepository.removeBillingInfo(mUserInfo, info);
+    }
+
+    public void addToShoppingCart(Product product, int quantity) {
+        assert (product != null);
+
+        mShoppingCart.addItem(product, quantity);
+    }
+
+    public void removeFromShoppingCart(Product product) {
+        assert (product != null);
+
+        mShoppingCart.removeItem(product);
     }
 
     /**
      * @return the mFirstName
      */
     public String getFirstName() {
-        return mFirstName;
+        if (mUserInfo == null) {
+            return "Guest";
+        }
+        return mUserInfo.FirstName;
     }
 
     /**
      * @return the mLastName
      */
     public String getLastName() {
-        return mLastName;
+        if (mUserInfo == null) {
+            return "User";
+        }
+        return mUserInfo.LastName;
     }
 
     /**
      * @return the mEmailAddress
      */
     public String getEmailAddress() {
-        return mEmailAddress;
+        if (mUserInfo == null) {
+            return "";
+        }
+        return mUserInfo.EmailAddress;
     }
 
     /**
      * @return the mAccessToken
      */
     public String getAccessToken() {
-        return mAccessToken;
+        if (mUserInfo == null) {
+            return "";
+        }
+        return mUserInfo.AccessToken;
     }
 
     /**
      * @return the mPhoneNumber
      */
     public String getPhoneNumber() {
-        return mPhoneNumber;
+        if (mUserInfo == null) {
+            return "";
+        }
+        return mUserInfo.PhoneNumber;
     }
 
     public void logout() {
-        mRepository.logout(this);
+        if (mUserInfo != null) {
+            mRepository.logout(mUserInfo);
+            mUserInfo = null;
+        }
+    }
+
+    public void login(String email, String password) {
+        mUserInfo = mRepository.login(email, password);
     }
 
     public void changePassword(String newPassword) {
         mRepository.changePassword(newPassword);
+    }
+
+    public AccessPrivileges getPrivileges() {
+        return mUserInfo.Privileges;
     }
 }

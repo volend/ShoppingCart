@@ -27,7 +27,7 @@ public class OrderDetails
 
     public OrderDetails(Date orderDate, BillingInformation payment, String customerEmail, String orderNumber)
     {
-        mState = OrderState.Created;
+        mState = OrderState.InProgress;
         mOrderDate = orderDate;
         mPaymentMethod = payment;
         mCustomerEmail = customerEmail;
@@ -42,7 +42,6 @@ public class OrderDetails
     
     public void setState(OrderState state)
     {
-        assert(mState != OrderState.Delivered);
         mState = state;
     }
     

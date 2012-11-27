@@ -12,19 +12,19 @@ import java.util.Set;
  */
 public interface IUserRepository {
 
-    User login(String emailAddress, String password);
+    UserInfo login(String emailAddress, String password);
 
-    void logout(User user);
+    void logout(UserInfo user);
 
-    User changePassword(String newPassword);
+    UserInfo changePassword(String newPassword);
 
-    User createUser(UserInfo info);
+    UserInfo createUser(UserInfo info);
 
-    Set<BillingInformation> getBillingInfo(User user);
+    Set<BillingInformation> getBillingInfo(UserInfo user);
 
-    void addBillingInfo(User owner, BillingInformation info);
+    void addBillingInfo(UserInfo owner, BillingInformation info);
 
-    void removeBillingInfo(User owner, BillingInformation info);
+    void removeBillingInfo(UserInfo owner, BillingInformation info);
     
-    void authorizeUser(User user);
+    void authorizeUser(UserInfo user);
 }

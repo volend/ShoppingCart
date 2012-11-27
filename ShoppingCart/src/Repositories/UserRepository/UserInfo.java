@@ -15,12 +15,15 @@ public class UserInfo {
     public final String EmailAddress;
     public final String AccessToken;
     public final String PhoneNumber;
+    public final AccessPrivileges Privileges;
 
-    public UserInfo(String fName, String lName, String email, String token, String number) {
+
+    public UserInfo(String fName, String lName, String email, String token, String number, AccessPrivileges privileges) {
         FirstName = fName;
         LastName = lName;
         EmailAddress = email;
         AccessToken = token;
         PhoneNumber = number;
+        Privileges = privileges;
     }
 }
