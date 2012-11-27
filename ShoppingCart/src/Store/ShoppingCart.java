@@ -20,16 +20,16 @@ public class ShoppingCart implements Iterable<Product> {
         mOrderItems = new HashMap<>();
     }
 
-    public void AddItem(Product item, int quantity) {
+    public void addItem(Product item, int quantity) {
         assert (quantity > 0);
         mOrderItems.put(item, quantity);
     }
 
-    public void RemoveItem(Product item) {
+    public void removeItem(Product item) {
         mOrderItems.remove(item);
     }
 
-    public void UpdateQuantity(Product item, int newQuantity) {
+    public void updateQuantity(Product item, int newQuantity) {
         assert (mOrderItems.containsKey(item));
         int quantity = mOrderItems.get(item);
 

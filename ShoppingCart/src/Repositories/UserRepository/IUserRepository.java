@@ -25,4 +25,6 @@ public interface IUserRepository {
     void addBillingInfo(User owner, BillingInformation info);
 
     void removeBillingInfo(User owner, BillingInformation info);
+    
+    void authorizeUser(User user);
 }

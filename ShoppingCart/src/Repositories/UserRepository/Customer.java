@@ -5,7 +5,7 @@
 package Repositories.UserRepository;
 
 import Store.ICustomerStoreView;
-import Store.Inventory;
+import Store.Product;
 import Store.ShoppingCart;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,17 +16,15 @@ import java.util.Set;
  */
 public class Customer extends User {
 
-    String mFirstName, mLastName;
-    String mEmailAddress;
-    String mPhoneNumber;
-    String mPasswordToken;
-    HashSet<BillingInformation> mPaymentOptions;
-    ShoppingCart mShoppingCart;
+    final HashSet<BillingInformation> mPaymentOptions;
+    final ShoppingCart mShoppingCart;
     ICustomerStoreView mStore;
 
     public Customer(ICustomerStoreView store, IUserRepository repository, UserInfo info) {
         super(info, repository);
         mStore = store;
+        mShoppingCart = new ShoppingCart();
+        mPaymentOptions = new HashSet<>();
     }
 
     public Set<BillingInformation> getBillingInfo() {
@@ -40,5 +38,18 @@ public class Customer extends User {
     public void removeBillingInfo(BillingInformation info) {
         mRepository.removeBillingInfo(this, info);
     }
-    //TODO: provide the ability to update account information
+    
+    public void addToShoppingCart(Product product, int quantity)
+    {
+        assert(product != null);
+        
+        mShoppingCart.addItem(product, quantity);
+    }
+    
+    public void removeFromShoppingCart(Product product)
+    {
+        assert(product != null);
+        
+        mShoppingCart.removeItem(product);
+    }
 }
