@@ -89,9 +89,9 @@ public class Store implements ICustomerStoreView, IManagerStoreView {
     }
 
     @Override
-    public OrderDetails startOrder(Customer buyer, Date orderDate, BillingInformation payment, String customerEmail) {
+    public OrderDetails startOrder(Customer buyer, BillingInformation payment) {
         
-        OrderDetails o = new OrderDetails(new Date(System.currentTimeMillis()), payment, customerEmail,mOrderRepository.getNextOrderNumber());
+        OrderDetails o = new OrderDetails(new Date(System.currentTimeMillis()), payment, buyer.getEmailAddress(),mOrderRepository.getNextOrderNumber());
         return o;
     }
 

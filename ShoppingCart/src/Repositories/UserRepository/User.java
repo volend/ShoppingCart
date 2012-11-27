@@ -56,6 +56,11 @@ public class User {
 
         mShoppingCart.removeItem(product);
     }
+    
+    public ShoppingCart getShoppingCart()
+    {
+        return mShoppingCart;
+    }
 
     /**
      * @return the mFirstName
