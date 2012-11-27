@@ -19,7 +19,7 @@ public class ProductRepository implements IProductRepository {
 
     private final HashMap<String, ProductInfo> mProducts;
 
-    ProductRepository() {
+    public ProductRepository() {
         mProducts = new HashMap<>();
         InitializeProducts();
     }
