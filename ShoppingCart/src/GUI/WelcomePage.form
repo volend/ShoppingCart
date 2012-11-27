@@ -51,9 +51,13 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="cbxAdminLogin" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="lblSize" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -70,8 +74,8 @@
                       <Component id="jScrollPane1" alignment="0" pref="801" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="btnAddToCart" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
-                          <Component id="lblAddViewErrorMessage" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
+                          <Component id="lblAddViewErrorMessage" min="-2" pref="251" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="btnViewShoppingCart" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -91,13 +95,15 @@
                       <Component id="txtSearch" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="262" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="223" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnAddToCart" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnViewShoppingCart" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblAddViewErrorMessage" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace pref="11" max="32767" attributes="0"/>
+                  <Component id="cbxAdminLogin" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -230,6 +236,14 @@
             <Property name="text" type="java.lang.String" value="                "/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="cbxAdminLogin">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Login as Administrator"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbxAdminLoginActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

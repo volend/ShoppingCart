@@ -25,9 +25,9 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="pnlShoppingCart" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="pnlLogin" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="pnlRegister" alignment="0" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="pnlLogin" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="pnlRegister" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -66,13 +66,10 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="sclPane" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="sclPane" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnUpdateCart" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="50" max="32767" attributes="0"/>
                           <Component id="btnAddMoreProducts" min="-2" max="-2" attributes="0"/>
@@ -317,7 +314,7 @@
                               <Component id="lblRegisterEmail" min="-2" max="-2" attributes="0"/>
                               <Component id="txtRegisterEmail" linkSize="4" min="-2" pref="207" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="35" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="45" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
