@@ -52,7 +52,7 @@ public class Confirmation extends javax.swing.JFrame {
         pnlConfirmation = new javax.swing.JPanel();
         btnDone = new javax.swing.JButton();
         btnRegurnToProducts = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        lblSummary = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPurchaseSummary = new javax.swing.JTable();
 
@@ -76,7 +76,7 @@ public class Confirmation extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("jLabel2");
+        lblSummary.setText("Please see your purchase summary below:");
 
         tblPurchaseSummary.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -115,7 +115,7 @@ public class Confirmation extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlConfirmationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlConfirmationLayout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblSummary, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE))
                 .addContainerGap())
@@ -124,7 +124,7 @@ public class Confirmation extends javax.swing.JFrame {
             pnlConfirmationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlConfirmationLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addComponent(jLabel2)
+                .addComponent(lblSummary)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
@@ -237,8 +237,8 @@ public class Confirmation extends javax.swing.JFrame {
     private javax.swing.JButton btnDone;
     private javax.swing.JButton btnRegurnToProducts;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblSummary;
     private javax.swing.JPanel pnlConfirmation;
     private javax.swing.JTable tblPurchaseSummary;
     // End of variables declaration//GEN-END:variables
