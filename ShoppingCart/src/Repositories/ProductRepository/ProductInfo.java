@@ -58,6 +58,8 @@ public class ProductInfo {
      * @param mReserved the mReserved to set
      */
     public void setReserved(int reserved) {
+        assert (mInStock + mReserved > reserved);
+        this.mInStock -= (mReserved - reserved);
         this.mReserved = reserved;
     }
 

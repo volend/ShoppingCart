@@ -16,7 +16,7 @@ public interface IUserRepository {
 
     void logout(UserInfo user);
 
-    UserInfo changePassword(String newPassword);
+    UserInfo changePassword(String email, String currentPassword, String newPassword);
 
     UserInfo createUser(UserInfo info);
 
@@ -26,5 +26,5 @@ public interface IUserRepository {
 
     void removeBillingInfo(UserInfo owner, BillingInformation info);
     
-    void authorizeUser(UserInfo user);
+    void authorizeUser(UserInfo manager, UserInfo user);
 }

@@ -16,6 +16,7 @@ public interface IOrderRepository {
     public Set<OrderSummary> getOrdersByCustomer(String emailAddress);
     public void completeOrder(OrderSummary summary);
     
+    public String getNextOrderNumber();
     public BigDecimal getTotalRevenue(Date from, Date to);
     public BigDecimal getTotalExpense(Date from, Date to);
 }

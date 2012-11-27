@@ -118,8 +118,13 @@ public class User {
         mUserInfo = mRepository.login(email, password);
     }
 
-    public void changePassword(String newPassword) {
-        mRepository.changePassword(newPassword);
+    public Boolean changePassword(String currentPassword, String newPassword) {
+        if (mUserInfo == null) {
+            return false;
+        }
+
+        mUserInfo = mRepository.changePassword(mUserInfo.EmailAddress, currentPassword, newPassword);
+        return true;
     }
 
     public AccessPrivileges getPrivileges() {

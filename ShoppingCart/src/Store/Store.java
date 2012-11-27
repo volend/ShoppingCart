@@ -11,8 +11,10 @@ import Repositories.UserRepository.BillingInformation;
 import Repositories.UserRepository.Customer;
 import Repositories.UserRepository.IUserRepository;
 import Repositories.UserRepository.Manager;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
+import sun.security.util.BigInt;
 
 /**
  *
@@ -88,31 +90,25 @@ public class Store implements ICustomerStoreView, IManagerStoreView {
 
     @Override
     public OrderDetails startOrder(Customer buyer, Date orderDate, BillingInformation payment, String customerEmail) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
+        OrderDetails o = new OrderDetails(new Date(System.currentTimeMillis()), payment, customerEmail,mOrderRepository.getNextOrderNumber());
+        return o;
     }
 
     @Override
     public void completeOrder(OrderDetails order) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        OrderSummary summary = new OrderSummary(order.getOrderNumber(), order.getOrderDate(), order.getCustomerEmail(), order.getPaymentMethod(), 
+               order.getOrderTotal(), order.getOrderDiscount(), getOrderCost(order));
+        mOrderRepository.completeOrder(summary);
     }
 
     @Override
     public void requestOrderCancelatlion(OrderDetails order) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    private BigDecimal getOrderCost(OrderDetails order) {
+        //TODO: Compute total cost of order
+        return BigDecimal.ZERO;
+    }
 }
-//	public void initializeStore(Inventory items);	
-//	void updateItem(String sku, ProductInfo product);
-//	void removeItem(String sku); // Does not reflect total expenses
-//	void addItem(ProductInfo product); // Reflects total expenses
-//	
-//	String/*order number*/ placeOrder(Customer buyer, OrderDetails order);
-//	OrderDetails getOrder(String orderNumber);
-//	boolean modifyOrder(OrderDetails order);
-//	
-//	Set<OrderDetails> getOrdersByState(OrderState state);
-//	Set<OrderDetails> getOrdersByCustomerEmail(String emailAddress);
-//	void UpdateOrderStatus(String orderNumber, OrderState newState);
-//	Decimal getTotalRevenue(Date from, Date to); // Retrieved from all order sales
-//	Decimal getTotalExpenses(Date from, Date to); // Retrieved from all manager purchases of items
-//}

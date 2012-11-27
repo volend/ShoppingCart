@@ -12,6 +12,7 @@ import java.util.HashSet;
  *
  * @author volen
  */
+// Implemented filter logic using the Strategy, Composite and Factory Design Patterns
 public abstract class BaseFilter {
 
     // This is what is displayed on the screen when a filter is added

@@ -20,13 +20,15 @@ public class OrderSummary {
     public final BillingInformation PaymentMethod;
     public final BigDecimal OrderTotal;
     public final BigDecimal DiscountTotal;
+    public final BigDecimal CostTotal;
 
-    public OrderSummary(String number, Date date, String email, BillingInformation payment, BigDecimal total, BigDecimal discount) {
+    public OrderSummary(String number, Date date, String email, BillingInformation payment, BigDecimal total, BigDecimal discount, BigDecimal cost) {
         OrderNumber = number;
         OrderDate = date;
         CustomerEmail = email;
         PaymentMethod = payment;
         OrderTotal = total;
         DiscountTotal = discount;
+        CostTotal = cost;
     }
 }

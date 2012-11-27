@@ -5,6 +5,7 @@
  */
 package Store;
 
+import Repositories.OrderRepository.OrderSummary;
 import Repositories.UserRepository.*;
 import java.util.Date;
 import java.util.Set;
@@ -15,7 +16,7 @@ import java.util.Set;
  */
 public interface ICustomerStoreView extends IBaseStoreView {
 
-    Set<OrderDetails> getOrdersByCustomerEmail(String emailAddress);
+    Set<OrderSummary> getOrdersByCustomerEmail(String emailAddress);
 
     OrderDetails startOrder(Customer buyer, Date orderDate, BillingInformation payment, String customerEmail);
     void completeOrder(OrderDetails order);

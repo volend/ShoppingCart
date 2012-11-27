@@ -17,7 +17,6 @@ public class UserInfo {
     public final String PhoneNumber;
     public final AccessPrivileges Privileges;
 
-
     public UserInfo(String fName, String lName, String email, String token, String number, AccessPrivileges privileges) {
         FirstName = fName;
         LastName = lName;
@@ -25,5 +24,14 @@ public class UserInfo {
         AccessToken = token;
         PhoneNumber = number;
         Privileges = privileges;
+    }
+
+    public UserInfo(UserInfo other) {
+        FirstName = other.FirstName;
+        LastName = other.LastName;
+        EmailAddress = other.EmailAddress;
+        AccessToken = other.AccessToken;
+        PhoneNumber = other.PhoneNumber;
+        Privileges = other.Privileges;
     }
 }

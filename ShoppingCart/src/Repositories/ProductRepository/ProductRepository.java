@@ -15,7 +15,7 @@ import java.util.Set;
  *
  * @author volen
  */
-class ProductRepository implements IProductRepository {
+public class ProductRepository implements IProductRepository {
 
     private final HashMap<String, ProductInfo> mProducts;
 
@@ -31,17 +31,34 @@ class ProductRepository implements IProductRepository {
 
     @Override
     public ProductInfo getProductInfo(String sku) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (mProducts.containsKey(sku)) {
+            return mProducts.get(sku);
+        }
+        return null;
     }
 
     @Override
     public Boolean reserveProduct(String sku, int count) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (!mProducts.containsKey(sku)) {
+            return false;
+        }
+        ProductInfo info = mProducts.get(sku);
+        if (info.getInStock() < count) {
+            return false;
+        }
+        info.setReserved(count);
+        return true;
     }
 
     @Override
     public void releaseProduct(String sku, int count) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (!mProducts.containsKey(sku)) {
+            return;
+        }
+        ProductInfo info = mProducts.get(sku);
+        int reserved = info.getReserved();
+        int toReserve = reserved > count ? reserved - count : 0;
+        info.setReserved(toReserve);
     }
 
     @Override
