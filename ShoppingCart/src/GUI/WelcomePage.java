@@ -27,7 +27,8 @@ public class WelcomePage extends javax.swing.JFrame {
     /**
      * Creates new form WelcomePage
      */
-    public WelcomePage() {        
+    public WelcomePage() {  
+        
         super("Welcome to V&M Online Shop");
         initComponents();
         Events();
@@ -38,6 +39,7 @@ public class WelcomePage extends javax.swing.JFrame {
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
         setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
+        btnViewShoppingCart.setVisible(false);
     }
 
     public void close(){
@@ -287,6 +289,12 @@ public class WelcomePage extends javax.swing.JFrame {
                 selectedProducts[noProducts][1] = Integer.toString((Integer)products[i][6]);
                 noProducts++;
             }
+            if (noProducts == 0){
+                lblAddViewErrorMessage.setText("Please select items to add to shopping cart.");
+            }else{
+                lblAddViewErrorMessage.setText("");
+                btnViewShoppingCart.setVisible(true);
+        }
         }
         
 
@@ -310,7 +318,7 @@ public class WelcomePage extends javax.swing.JFrame {
             p.setVisible(true);
         }   else {
             lblAddViewErrorMessage.setVisible(true);
-            lblAddViewErrorMessage.setText("Please select items and add them to shopping cart.");
+            
         }     
 
     }//GEN-LAST:event_btnViewShoppingCartActionPerformed
