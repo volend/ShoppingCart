@@ -4,11 +4,16 @@
  */
 package GUI;
 
+import Repositories.ProductRepository.ProductInfo;
+import Repositories.ProductRepository.ProductRepository;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.MouseAdapter;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.event.TableModelListener;
@@ -386,7 +391,8 @@ public class WelcomePage extends javax.swing.JFrame {
     
     ShoppingCart p = new ShoppingCart();
     
-    private Object [][] products = new Object [][] {        
+    private Object [][] products;
+    /* = new Object [][] {        
         {new Boolean(false), "Beach T-Shirt", "L", "Purple", "1", new Double(10.5), 1},
         {new Boolean(false),"Beach T-Shirt", "L", "Blue", "1", new Double(11.5), 2},
         {new Boolean(false),"Beach T-Shirt", "L", "White", "1", new Double(12.5), 3},
@@ -399,11 +405,34 @@ public class WelcomePage extends javax.swing.JFrame {
         {new Boolean(false),"T-Shirt", "XL", "Purple", "1", new Double(13.5), 10},
         {new Boolean(false),"T-Shirt", "XL", "Blue", "1", new Double(11.5), 11},
         {new Boolean(false),"T-Shirt", "XL", "White", "1", new Double(12.5), 12}                
-    };
+    };*/
+    
+    
+    
     
     private String [][] selectedProducts;
     
-    private Object[][] getProducts(){          
+    private Object[][] getProducts(){    
+        ProductRepository pr = new ProductRepository();
+        HashMap<String, ProductInfo> map = pr.getProductList();  
+        Set set = map.entrySet();       
+        Iterator iter = set.iterator();
+                
+        products = new Object [map.size()][7];
+        int i  = 0;
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            Repositories.ProductRepository.ProductInfo pi = ((Repositories.ProductRepository.ProductInfo)entry.getValue());                     
+            products[i][0] = new Boolean(false);
+            products[i][1] = pi.getProduct().getTitle();            
+            products[i][2] = pi.getProduct().getSize().toString();
+            products[i][3] = pi.getProduct().getColor().toString();
+            products[i][4] = "1";
+            products[i][5] = pi.getProduct().getSalePrice();                    
+            products[i][6] = i+1;            
+            i++;           
+        }
+        
         return products;
     }
     

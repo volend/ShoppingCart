@@ -221,6 +221,7 @@ public void close(){
         close();
         ShoppingCart s = new ShoppingCart();
         s.setVisible(true);
+       
     }//GEN-LAST:event_btnBackActionPerformed
 
     /**

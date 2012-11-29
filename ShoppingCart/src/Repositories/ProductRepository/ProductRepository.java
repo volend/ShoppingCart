@@ -4,6 +4,7 @@
  */
 package Repositories.ProductRepository;
 
+import Store.Product;
 import Store.ProductSize;
 import java.awt.Color;
 import java.math.BigDecimal;
@@ -25,9 +26,15 @@ public class ProductRepository implements IProductRepository {
 
     @Override
     public Set<Product> getProducts() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        //throw new UnsupportedOperationException("Not supported yet.");
+        Set set = mProducts.entrySet();
+        return set;        
     }
-
+    
+    public HashMap<String, ProductInfo> getProductList(){
+        return mProducts;
+    }
+    
     @Override
     public ProductInfo getProductInfo(String sku) {
         if (mProducts.containsKey(sku)) {
@@ -162,6 +169,17 @@ public class ProductRepository implements IProductRepository {
         p1.setSalePrice(new BigDecimal(44.51d));
 
         mProducts.put(p1.getSKU(), getProductInfo(p1));
+        
+        p1 = new Product("3590009");
+        p1.setCategory("T-Shirts");
+        p1.setColor(Color.PINK);
+        p1.setSize(ProductSize.Medium);
+        p1.setDescription("Amazing T-Shirt, perfect replica of the original 1994 World Championship official T-Shirt.");
+        p1.setTitle("Official FIFA T-Shirt");
+        p1.setSalePrice(new BigDecimal(50.51d));
+
+        mProducts.put(p1.getSKU(), getProductInfo(p1));
+        
     }
 
     private ProductInfo getProductInfo(Product p) {

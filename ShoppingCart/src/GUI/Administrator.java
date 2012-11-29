@@ -69,6 +69,8 @@ public class Administrator extends javax.swing.JFrame {
         btnOK = new javax.swing.JButton();
         lblFrom = new javax.swing.JLabel();
         lblTo = new javax.swing.JLabel();
+        txtFrom = new javax.swing.JTextField();
+        txtTo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -183,29 +185,30 @@ public class Administrator extends javax.swing.JFrame {
         pnlFinancials.setLayout(pnlFinancialsLayout);
         pnlFinancialsLayout.setHorizontalGroup(
             pnlFinancialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFinancialsLayout.createSequentialGroup()
-                .addGroup(pnlFinancialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(pnlFinancialsLayout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(pnlFinancialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlFinancialsLayout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addGroup(pnlFinancialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlFinancialsLayout.createSequentialGroup()
-                                .addComponent(lblTo)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(pnlFinancialsLayout.createSequentialGroup()
-                                .addGroup(pnlFinancialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblFrom)
-                                    .addComponent(lblTotalRevenue, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(pnlFinancialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(lblTotalDiscounts, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                                        .addComponent(lblTotalCost, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 311, Short.MAX_VALUE))))
-                    .addGroup(pnlFinancialsLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(pnlFinancialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnOK)
-                            .addComponent(btnModifyInventory, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(24, 24, 24))
+                        .addComponent(lblFrom)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblTotalRevenue, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlFinancialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(lblTotalDiscounts, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                        .addComponent(lblTotalCost, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlFinancialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnOK)
+                        .addGroup(pnlFinancialsLayout.createSequentialGroup()
+                            .addComponent(lblTo)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(txtTo, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(8, 8, 8)))
+                    .addComponent(btnModifyInventory, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(335, Short.MAX_VALUE))
         );
+
+        pnlFinancialsLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtFrom, txtTo});
+
         pnlFinancialsLayout.setVerticalGroup(
             pnlFinancialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFinancialsLayout.createSequentialGroup()
@@ -215,15 +218,19 @@ public class Administrator extends javax.swing.JFrame {
                 .addComponent(lblTotalCost)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblTotalDiscounts)
-                .addGap(79, 79, 79)
-                .addComponent(lblFrom)
-                .addGap(18, 18, 18)
+                .addGap(76, 76, 76)
                 .addGroup(pnlFinancialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblFrom)
+                    .addComponent(txtFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlFinancialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTo)
-                    .addComponent(btnOK))
+                    .addComponent(txtTo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnOK, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnModifyInventory)
-                .addContainerGap())
+                .addGap(30, 30, 30))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -332,5 +339,7 @@ public class Administrator extends javax.swing.JFrame {
     private javax.swing.JPanel pnlReports;
     private javax.swing.JTextField txtAdminEmail;
     private javax.swing.JPasswordField txtAdminPassword;
+    private javax.swing.JTextField txtFrom;
+    private javax.swing.JTextField txtTo;
     // End of variables declaration//GEN-END:variables
 }

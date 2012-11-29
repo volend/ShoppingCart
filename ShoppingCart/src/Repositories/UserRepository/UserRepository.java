@@ -37,7 +37,11 @@ public class UserRepository implements IUserRepository {
         mLoggedIn.add(emailAddress);
         return info;
     }
-
+    
+    public HashMap<String, UserInfo> getUserList(){
+        return mUsers;
+    }
+    
     @Override
     public void logout(UserInfo user) {
         mLoggedIn.remove(user.EmailAddress);

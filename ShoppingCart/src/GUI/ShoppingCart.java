@@ -4,13 +4,20 @@
  */
 package GUI;
 
+import Repositories.ProductRepository.ProductInfo;
+import Repositories.ProductRepository.ProductRepository;
+import Repositories.UserRepository.UserInfo;
+import Repositories.UserRepository.UserRepository;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.util.HashSet;
-import java.util.Set;
 import java.awt.event.MouseAdapter;
 import java.awt.Dimension;
+import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -36,10 +43,10 @@ public class ShoppingCart extends javax.swing.JFrame {
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
         setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
-        
+        getProducts();
         
         pnlRegister.setVisible(false);
-        jButton1.setVisible(false);
+        btnLogout.setVisible(false);
     }
 
         public void close(){
@@ -61,9 +68,11 @@ public class ShoppingCart extends javax.swing.JFrame {
         pnlShoppingCart = new javax.swing.JPanel();
         btnAddMoreProducts = new javax.swing.JButton();
         btnUpdateCart = new javax.swing.JButton();
-        btnCheckout = new javax.swing.JButton();
         sclPane = new javax.swing.JScrollPane();
         tblShoppingCartProducts = new javax.swing.JTable();
+        btnCheckout = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        lblTotal = new javax.swing.JLabel();
         pnlLogin = new javax.swing.JPanel();
         btnLogin = new javax.swing.JButton();
         btnRegister = new javax.swing.JButton();
@@ -71,7 +80,7 @@ public class ShoppingCart extends javax.swing.JFrame {
         lblEmail = new javax.swing.JLabel();
         lblLoginPassword = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
         pnlRegister = new javax.swing.JPanel();
         lblRegisterEmail = new javax.swing.JLabel();
         lblRegisterPassword = new javax.swing.JLabel();
@@ -104,13 +113,6 @@ public class ShoppingCart extends javax.swing.JFrame {
             }
         });
 
-        btnCheckout.setText("CHECKOUT");
-        btnCheckout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCheckoutActionPerformed(evt);
-            }
-        });
-
         tblShoppingCartProducts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -136,6 +138,18 @@ public class ShoppingCart extends javax.swing.JFrame {
         });
         sclPane.setViewportView(tblShoppingCartProducts);
 
+        btnCheckout.setText("CHECKOUT");
+        btnCheckout.setEnabled(false);
+        btnCheckout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckoutActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Total Order:");
+
+        lblTotal.setText("$0.00");
+
         javax.swing.GroupLayout pnlShoppingCartLayout = new javax.swing.GroupLayout(pnlShoppingCart);
         pnlShoppingCart.setLayout(pnlShoppingCartLayout);
         pnlShoppingCartLayout.setHorizontalGroup(
@@ -146,21 +160,31 @@ public class ShoppingCart extends javax.swing.JFrame {
                     .addComponent(sclPane)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlShoppingCartLayout.createSequentialGroup()
                         .addComponent(btnUpdateCart)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                         .addComponent(btnAddMoreProducts)
                         .addGap(100, 100, 100)
                         .addComponent(btnCheckout)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlShoppingCartLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblTotal)
+                .addGap(48, 48, 48))
         );
         pnlShoppingCartLayout.setVerticalGroup(
             pnlShoppingCartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlShoppingCartLayout.createSequentialGroup()
                 .addComponent(sclPane, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlShoppingCartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(lblTotal))
+                .addGap(18, 18, 18)
                 .addGroup(pnlShoppingCartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddMoreProducts)
-                    .addComponent(btnCheckout)
-                    .addComponent(btnUpdateCart))
+                    .addComponent(btnUpdateCart)
+                    .addComponent(btnCheckout))
                 .addContainerGap())
         );
 
@@ -185,7 +209,12 @@ public class ShoppingCart extends javax.swing.JFrame {
 
         lblLoginPassword.setText("Password");
 
-        jButton1.setText("jButton1");
+        btnLogout.setText("LOGOUT");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlLoginLayout = new javax.swing.GroupLayout(pnlLogin);
         pnlLogin.setLayout(pnlLoginLayout);
@@ -204,8 +233,8 @@ public class ShoppingCart extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRegister)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnLogout)))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         pnlLoginLayout.setVerticalGroup(
             pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,7 +250,7 @@ public class ShoppingCart extends javax.swing.JFrame {
                 .addGroup(pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogin)
                     .addComponent(btnRegister)
-                    .addComponent(jButton1))
+                    .addComponent(btnLogout))
                 .addContainerGap())
         );
 
@@ -245,6 +274,11 @@ public class ShoppingCart extends javax.swing.JFrame {
         });
 
         btnSubmit.setText("SUBMIT");
+        btnSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubmitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlRegisterLayout = new javax.swing.GroupLayout(pnlRegister);
         pnlRegister.setLayout(pnlRegisterLayout);
@@ -273,7 +307,7 @@ public class ShoppingCart extends javax.swing.JFrame {
                         .addGroup(pnlRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblRegisterEmail)
                             .addComponent(txtRegisterEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 45, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         pnlRegisterLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtFirstName, txtLastName, txtRegisterEmail, txtRegisterPassword, txtRepeatPassword});
@@ -315,21 +349,21 @@ public class ShoppingCart extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlShoppingCart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlLogin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlRegister, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnlLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlRegister, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(pnlLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pnlRegister, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlShoppingCart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(43, Short.MAX_VALUE))
+                        .addComponent(pnlRegister, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(pnlShoppingCart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         pnlLogin.getAccessibleContext().setAccessibleName("");
@@ -381,15 +415,37 @@ public class ShoppingCart extends javax.swing.JFrame {
         
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
                         
-            txtEmail.setVisible(false);
-            txtPassword.setVisible(false);
-            btnRegister.setVisible(false);
-            lblEmail.setText("Welcome Dear Customer");
-            lblLoginPassword.setText("Customer's name goes here.");
+        UserRepository ur = new UserRepository();
+        HashMap<String, UserInfo> map = ur.getUserList();  
+        Set set = map.entrySet();       
+        Iterator iter = set.iterator();
+                     
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            Repositories.UserRepository.UserInfo ui = ((Repositories.UserRepository.UserInfo)entry.getValue());                     
+                                    
+            if (ui.EmailAddress.equals(txtEmail.getText())){
+                txtEmail.setVisible(false);
+                txtPassword.setVisible(false);
+                btnRegister.setVisible(false);
+                btnLogin.setVisible(false);        
+                lblEmail.setText("Welcome Dear Customer....");
+                lblLoginPassword.setText("You may now checkout.");
+                btnLogout.setVisible(true);
+                btnCheckout.setEnabled(true);
+                
+                return;
+            }
                         
+        }
+        
+        JOptionPane.showMessageDialog(this, "Invalid Credentials");
+        
+            
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnCheckoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckoutActionPerformed
+        
         close();
         PaymentDetails c = new PaymentDetails();
         c.setVisible(true);        
@@ -420,6 +476,35 @@ public class ShoppingCart extends javax.swing.JFrame {
     private void btnUpdateCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateCartActionPerformed
         
     }//GEN-LAST:event_btnUpdateCartActionPerformed
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        pnlLogin.setVisible(true);
+        btnLogout.setVisible(false);
+        txtEmail.setVisible(true);
+        txtPassword.setVisible(true);
+        btnRegister.setVisible(true);
+        btnLogin.setVisible(true);        
+        lblEmail.setText("Email");
+        lblLoginPassword.setText("Password");
+        btnLogout.setVisible(false);                    
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
+        pnlRegister.setVisible(false);
+        pnlLogin.setVisible(true);
+        btnCheckout.setEnabled(true);
+        
+        txtEmail.setVisible(false);
+        txtPassword.setVisible(false);
+        btnRegister.setVisible(false);
+        btnLogin.setVisible(false);        
+        lblEmail.setText("Welcome Dear Customer....");        
+            lblLoginPassword.setText("You may now checkout.");
+            btnLogout.setVisible(true);
+            btnCheckout.setEnabled(true);
+
+        
+    }//GEN-LAST:event_btnSubmitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -463,10 +548,11 @@ public class ShoppingCart extends javax.swing.JFrame {
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnCheckout;
     private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnRegister;
     private javax.swing.JButton btnSubmit;
     private javax.swing.JButton btnUpdateCart;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblFirstName;
     private javax.swing.JLabel lblLastName;
@@ -474,6 +560,7 @@ public class ShoppingCart extends javax.swing.JFrame {
     private javax.swing.JLabel lblRegisterEmail;
     private javax.swing.JLabel lblRegisterPassword;
     private javax.swing.JLabel lblRepeatPassword;
+    private javax.swing.JLabel lblTotal;
     private javax.swing.JPanel pnlLogin;
     private javax.swing.JPanel pnlRegister;
     private javax.swing.JPanel pnlShoppingCart;
@@ -488,7 +575,9 @@ public class ShoppingCart extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtRepeatPassword;
     // End of variables declaration//GEN-END:variables
 
-    private Object [][] products = new Object [][] {        
+    private Object [][] products;
+    /*
+    = new Object [][] {        
         {new Boolean(false), "Beach T-Shirt", "L", "Purple", "1", new Double(10.5), 1},
         {new Boolean(false),"Beach T-Shirt", "L", "Blue", "1", new Double(11.5), 2},
         {new Boolean(false),"Beach T-Shirt", "L", "White", "1", new Double(12.5), 3},
@@ -502,7 +591,31 @@ public class ShoppingCart extends javax.swing.JFrame {
         {new Boolean(false),"T-Shirt", "XL", "Blue", "1", new Double(11.5), 11},
         {new Boolean(false),"T-Shirt", "XL", "White", "1", new Double(12.5), 12}                
     };
-
+    */
+    
+    private Object[][] getProducts(){    
+        ProductRepository pr = new ProductRepository();
+        HashMap<String, ProductInfo> map = pr.getProductList();  
+        Set set = map.entrySet();       
+        Iterator iter = set.iterator();
+                
+        products = new Object [map.size()][7];
+        int i  = 0;
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            Repositories.ProductRepository.ProductInfo pi = ((Repositories.ProductRepository.ProductInfo)entry.getValue());                     
+            products[i][0] = new Boolean(false);
+            products[i][1] = pi.getProduct().getTitle();            
+            products[i][2] = pi.getProduct().getSize().toString();
+            products[i][3] = pi.getProduct().getColor().toString();
+            products[i][4] = "1";
+            products[i][5] = pi.getProduct().getSalePrice();                    
+            products[i][6] = i+1;            
+            i++;           
+        }
+        
+        return products;
+    }
     
     private String [][] selectedProducts;
     
@@ -510,6 +623,8 @@ public class ShoppingCart extends javax.swing.JFrame {
         selectedProducts = p;
         
         }
+    
+    private double totalOrder  = 0;
     
     private  Object [][] getselectedProducts()
     {
@@ -528,9 +643,14 @@ public class ShoppingCart extends javax.swing.JFrame {
                     p[i][4] = products[j][4];
                     p[i][5] = products[j][5];
                     p[i][6] = products[j][6];
+                    
+                    totalOrder += 20; // add products[j][5]
+                    
                 }
             }
         }        
+        
+        lblTotal.setText(Double.toString(totalOrder));
         
         return p;        
     }
