@@ -4,6 +4,7 @@
  */
 package Store;
 
+import Repositories.ProductRepository.Product;
 import Repositories.ProductRepository.IProductRepository;
 import java.util.ArrayList;
 import java.util.Collection;

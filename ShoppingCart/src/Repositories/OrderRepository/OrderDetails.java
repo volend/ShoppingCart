@@ -2,9 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Store;
+package Repositories.OrderRepository;
 
+import Repositories.ProductRepository.LineItem;
+import Repositories.ProductRepository.Product;
 import Repositories.UserRepository.BillingInformation;
+import Store.Coupon;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Date;

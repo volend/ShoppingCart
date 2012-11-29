@@ -4,6 +4,8 @@
  */
 package Store;
 
+import Repositories.ProductRepository.Product;
+
 /**
  *
  * @author volen

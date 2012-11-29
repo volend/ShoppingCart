@@ -1,0 +1,16 @@
+----------------------------------------------------------------
+Wed Nov 28 22:07:35 EST 2012:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.9.1.0 - (1344872): instance a816c00e-013b-4a22-3916-000007076360 
+on database directory C:\Users\volen\Documents\GitHub\ShoppingCart\ShoppingCart\Resources\ShoppingCartDB  with class loader sun.misc.Launcher$AppClassLoader@5b2eda6f 
+Loaded from file:/C:/Users/volen/Documents/GitHub/ShoppingCart/ShoppingCart/Resources/db-derby-10.9.1.0-bin/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_06-b24
+user.dir=C:\Users\volen\Documents\GitHub\ShoppingCart\ShoppingCart\Resources
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Wed Nov 28 22:12:51 EST 2012: Shutting down Derby engine
+----------------------------------------------------------------
+Wed Nov 28 22:12:51 EST 2012:
+Shutting down instance a816c00e-013b-4a22-3916-000007076360 on database directory C:\Users\volen\Documents\GitHub\ShoppingCart\ShoppingCart\Resources\ShoppingCartDB with class loader sun.misc.Launcher$AppClassLoader@5b2eda6f 
+----------------------------------------------------------------

@@ -4,7 +4,7 @@
  */
 package Repositories.UserRepository;
 
-import Store.Product;
+import Repositories.ProductRepository.Product;
 import Store.ShoppingCart;
 import java.util.HashSet;
 import java.util.Set;

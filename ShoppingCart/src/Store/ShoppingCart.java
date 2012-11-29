@@ -4,6 +4,7 @@
  */
 package Store;
 
+import Repositories.ProductRepository.Product;
 import java.util.HashMap;
 import java.util.Iterator;
 

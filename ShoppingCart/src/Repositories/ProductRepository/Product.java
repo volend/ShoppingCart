@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Store;
+package Repositories.ProductRepository;
 
+import Store.ProductSize;
 import java.awt.Color;
 import java.math.BigDecimal;
 
@@ -107,7 +108,7 @@ public class Product {
         mCategory = category;
     }
     
-    ProductSize getSize() {
+    public ProductSize getSize() {
         return mSize;
     }
     

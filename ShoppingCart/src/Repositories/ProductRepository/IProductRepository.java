@@ -4,7 +4,6 @@
  */
 package Repositories.ProductRepository;
 
-import Store.Product;
 import java.util.Set;
 
 /**

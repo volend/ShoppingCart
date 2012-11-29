@@ -2,7 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Store;
+package Repositories.ProductRepository;
+
+import Repositories.ProductRepository.Product;
 
 /**
  *
@@ -10,8 +12,8 @@ package Store;
  */
 public class LineItem extends Product
 {
-    final Product Product;
-    final Integer PercentDiscount;
+    public final Product Product;
+    public final Integer PercentDiscount;
     
     public LineItem(Product product, Integer percentDiscount)            
     {

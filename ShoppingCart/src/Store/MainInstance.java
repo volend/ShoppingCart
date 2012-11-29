@@ -15,6 +15,7 @@ import Repositories.UserRepository.UserRepository;
 import java.awt.Color;
 import java.util.HashSet;
 import java.util.Set;
+import persistenceEntities.DerbyRepository;
 
 /**
  *
@@ -30,6 +31,8 @@ public class MainInstance {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        DerbyRepository d = new DerbyRepository();
 
         Store.initializeStore(mProductRepository, mUserRepository, mOrderRepository);
 

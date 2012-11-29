@@ -4,6 +4,8 @@
  */
 package Store;
 
+import Repositories.OrderRepository.OrderDetails;
+import Repositories.ProductRepository.Product;
 import Repositories.OrderRepository.IOrderRepository;
 import Repositories.OrderRepository.OrderSummary;
 import Repositories.ProductRepository.IProductRepository;
