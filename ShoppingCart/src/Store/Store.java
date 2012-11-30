@@ -63,6 +63,12 @@ public class Store implements ICustomerStoreView, IManagerStoreView {
     public Inventory getInventory() {
         return new Inventory(mProductRepository);
     }
+    
+    @Override
+    public UserInfo registerUser(UserInfo info)
+    {
+        return mUserRepository.createUser(info);
+    }
 
     @Override
     public UserInfo login(String email, String password) {

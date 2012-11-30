@@ -57,22 +57,19 @@ public class RepositoriesTest {
         UserInfo u3 = new UserInfo("Tom", "Chen", "tchen@fau.edu", "passkey3", "44100003", AccessPrivileges.Limited);
         UserInfo u4 = new UserInfo("Stanley", "Frank", "sfrank@fau.edu", "passkey4", "44100004", AccessPrivileges.Full);
 
-        UserInfo nullUser = sMainRepository.createUser(null, u1);
-        Assert.assertTrue(nullUser == null);
-
         UserInfo adminUser = sMainRepository.login("vdimitro@fau.edu", "Miguel");
         Assert.assertTrue("Admin user not found", adminUser != null);
 
-        u1 = sMainRepository.createUser(adminUser, u1);
+        u1 = sMainRepository.createUser(u1);
         Assert.assertTrue(u1 != null);
 
-        u2 = sMainRepository.createUser(adminUser, u2);
+        u2 = sMainRepository.createUser(u2);
         Assert.assertTrue(u2 != null);
 
-        u3 = sMainRepository.createUser(adminUser, u3);
+        u3 = sMainRepository.createUser(u3);
         Assert.assertTrue(u3 != null);
 
-        u4 = sMainRepository.createUser(adminUser, u4);
+        u4 = sMainRepository.createUser(u4);
         Assert.assertTrue(u4 != null);
 
         sMainRepository.deleteUser(u1);

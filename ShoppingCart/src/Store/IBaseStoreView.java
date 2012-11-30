@@ -16,4 +16,5 @@ public interface IBaseStoreView {
     public Customer customerLogin(String email, String password);
     public Manager managerLogin(String email, String password);
     public UserInfo login(String email, String password);
+    public UserInfo registerUser(UserInfo info);
 }

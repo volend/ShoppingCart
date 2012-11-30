@@ -145,22 +145,13 @@ public class DerbyDBRepository implements IOrderRepository, IUserRepository, IPr
     }
 
     @Override
-    public UserInfo createUser(UserInfo manager, UserInfo info) {
+    public UserInfo createUser(UserInfo info) {
 
-        boolean initialInvocation = false;
+        boolean initialInvocation;
         // Special case where the no users exist in the database
-        if (manager == null) {
-            TypedQuery<Users> query = mManager.createNamedQuery("Users.findAll", Users.class);
-            List<Users> results = query.getResultList();
-            if (!results.isEmpty()) {
-                return null;
-            }
-        } else {
-            manager = login(manager.EmailAddress, manager.AccessToken);
-            if (manager == null) {
-                return null;
-            }
-        }
+        TypedQuery<Users> query = mManager.createNamedQuery("Users.findAll", Users.class);
+        List<Users> results = query.getResultList();
+        initialInvocation = results.isEmpty();
 
         Users user = getUser(info.EmailAddress, info.AccessToken, false);
         if (user != null) {
@@ -170,8 +161,9 @@ public class DerbyDBRepository implements IOrderRepository, IUserRepository, IPr
         user = convert(info);
         if (initialInvocation) // Promote first user have full access
         {
-            user.setAccessPrivileges(convert(AccessPrivileges.Full));
+            user.setAccessPrivileges(convert(initialInvocation ? AccessPrivileges.Full : AccessPrivileges.Limited));
         }
+
 
         mManager.getTransaction().begin();
         mManager.merge(user);
