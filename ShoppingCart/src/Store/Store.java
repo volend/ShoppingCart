@@ -4,19 +4,20 @@
  */
 package Store;
 
-import Repositories.OrderRepository.OrderDetails;
-import Repositories.ProductRepository.Product;
 import Repositories.OrderRepository.IOrderRepository;
+import Repositories.OrderRepository.OrderDetails;
 import Repositories.OrderRepository.OrderSummary;
 import Repositories.ProductRepository.IProductRepository;
+import Repositories.ProductRepository.Product;
+import Repositories.ProductRepository.ProductInfo;
 import Repositories.UserRepository.BillingInformation;
 import Repositories.UserRepository.Customer;
 import Repositories.UserRepository.IUserRepository;
 import Repositories.UserRepository.Manager;
+import Repositories.UserRepository.UserInfo;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
-import sun.security.util.BigInt;
 
 /**
  *
@@ -64,6 +65,12 @@ public class Store implements ICustomerStoreView, IManagerStoreView {
     }
 
     @Override
+    public UserInfo login(String email, String password) {
+        UserInfo info = mUserRepository.login(email, password);
+        return info;
+    }
+
+    @Override
     public Customer customerLogin(String email, String password) {
         Customer customer = new Customer(this, mUserRepository);
         customer.login(email, password);
@@ -77,8 +84,11 @@ public class Store implements ICustomerStoreView, IManagerStoreView {
         return manager;
     }
 
-    public void updateItem(String sku, Product product) {
-          throw new UnsupportedOperationException("Not supported yet.");
+    @Override
+    public void updateItem(Product product) {
+        ProductInfo info = mProductRepository.getProductInfo(product.getSKU());
+        info.setProduct(product);
+        mProductRepository.updateProductInfo(info);
     }
 
     @Override
@@ -92,15 +102,15 @@ public class Store implements ICustomerStoreView, IManagerStoreView {
 
     @Override
     public OrderDetails startOrder(Customer buyer, BillingInformation payment) {
-        
-        OrderDetails o = new OrderDetails(new Date(System.currentTimeMillis()), payment, buyer.getEmailAddress(),mOrderRepository.getNextOrderNumber());
+
+        OrderDetails o = new OrderDetails(new Date(System.currentTimeMillis()), payment, buyer.getEmailAddress(), mOrderRepository.getNextOrderNumber());
         return o;
     }
 
     @Override
     public void completeOrder(OrderDetails order) {
-        OrderSummary summary = new OrderSummary(order.getOrderNumber(), order.getOrderDate(), order.getCustomerEmail(), order.getPaymentMethod(), 
-               order.getOrderTotal(), order.getOrderDiscount(), getOrderCost(order));
+        OrderSummary summary = new OrderSummary(order.getOrderNumber(), order.getOrderDate(), order.getCustomerEmail(), order.getPaymentMethod(),
+                order.getOrderTotal(), order.getOrderDiscount(), getOrderCost(order));
         mOrderRepository.completeOrder(summary);
     }
 

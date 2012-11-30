@@ -6,41 +6,32 @@ package Store;
 
 import GUI.WelcomePage;
 import Repositories.OrderRepository.IOrderRepository;
-import Repositories.OrderRepository.OrderRepository;
 import Repositories.ProductRepository.IProductRepository;
-import Repositories.ProductRepository.ProductInfo;
-import Repositories.ProductRepository.ProductRepository;
 import Repositories.UserRepository.IUserRepository;
-import Repositories.UserRepository.UserRepository;
-import java.awt.Color;
-import java.util.HashSet;
-import java.util.Set;
-import persistenceEntities.DerbyRepository;
+import persistenceEntities.DerbyDBRepository;
 
 /**
  *
  * @author volen
  */
+// Administrator account: UserInfo("Volen", "Dimitrov", "vdimitro@fau.edu", "Miguel", "44100001", AccessPrivileges.Full);
 public class MainInstance {
-
-    private static IOrderRepository mOrderRepository = new OrderRepository();
-    private static IProductRepository mProductRepository = new ProductRepository();
-    private static IUserRepository mUserRepository = new UserRepository();
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-        DerbyRepository d = new DerbyRepository();
 
-        Store.initializeStore(mProductRepository, mUserRepository, mOrderRepository);
+        DerbyDBRepository mainRepository = new DerbyDBRepository();
+        
+        
+        Store.initializeStore((IProductRepository) mainRepository, (IUserRepository) mainRepository, (IOrderRepository) mainRepository);
 
 
         // Put your code for starting the main JForm here.
         // You can access the main instance like this: Store.getInstance()
-        
-                /* Set the Nimbus look and feel */
+
+        /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -67,7 +58,7 @@ public class MainInstance {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new WelcomePage().setVisible(true);
-         
+
 
             }
         });

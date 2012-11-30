@@ -13,8 +13,7 @@ import java.util.Set;
 public interface IProductRepository {
     Set<Product> getProducts();
     ProductInfo getProductInfo(String sku);
-    Boolean reserveProduct(String sku, int count);
-    void releaseProduct(String sku, int count);
+    boolean reserveProduct(String sku, int count);
     
     void updateProductInfo(ProductInfo info);
     void addNewProduct(ProductInfo info);

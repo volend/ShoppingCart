@@ -18,13 +18,15 @@ public interface IUserRepository {
 
     UserInfo changePassword(String email, String currentPassword, String newPassword);
 
-    UserInfo createUser(UserInfo info);
+    UserInfo createUser(UserInfo manager, UserInfo info);
+    void deleteUser(UserInfo info);
 
     Set<BillingInformation> getBillingInfo(UserInfo user);
 
     void addBillingInfo(UserInfo owner, BillingInformation info);
 
     void removeBillingInfo(UserInfo owner, BillingInformation info);
-    
-    void authorizeUser(UserInfo manager, UserInfo user);
+
+    UserInfo authorizeUser(UserInfo manager, UserInfo user);
+    UserInfo deauthorizeUser(UserInfo managerInfo, UserInfo userInfo);
 }

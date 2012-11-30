@@ -18,7 +18,7 @@ public class OrderSummary {
     public final Date OrderDate;
     public final String CustomerEmail;
     public final BillingInformation PaymentMethod;
-    public final BigDecimal OrderTotal;
+    public final BigDecimal RevenueTotal;
     public final BigDecimal DiscountTotal;
     public final BigDecimal CostTotal;
 
@@ -27,7 +27,7 @@ public class OrderSummary {
         OrderDate = date;
         CustomerEmail = email;
         PaymentMethod = payment;
-        OrderTotal = total;
+        RevenueTotal = total;
         DiscountTotal = discount;
         CostTotal = cost;
     }

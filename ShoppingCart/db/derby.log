@@ -1,7 +1,7 @@
-Wed Nov 28 22:20:27 EST 2012 : Apache Derby Network Server - 10.8.2.2 - (1181258) started and ready to accept connections on port 1527
+Thu Nov 29 21:41:04 EST 2012 : Apache Derby Network Server - 10.8.2.2 - (1181258) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Wed Nov 28 22:20:28 EST 2012:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-013b-4a2e-0417-000057c82cba 
+Thu Nov 29 21:41:04 EST 2012:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-013b-4f30-4e37-000057c82cba 
 on database directory C:\Users\volen\Documents\GitHub\ShoppingCart\ShoppingCart\db\ShoppingCartDB  with class loader sun.misc.Launcher$AppClassLoader@c22b29a 
 Loaded from file:/C:/Program%20Files/Java/jdk1.7.0_06/db/lib/derby.jar
 java.vendor=Oracle Corporation
@@ -9,23 +9,3 @@ java.runtime.version=1.7.0_06-b24
 user.dir=C:\Program Files\Java\jdk1.7.0_06\db
 derby.system.home=C:\Users\volen\Documents\GitHub\ShoppingCart\ShoppingCart\db
 Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-Wed Nov 28 22:20:28 EST 2012:
-Shutting down instance a816c00e-013b-4a2e-0417-000057c82cba on database directory C:\Users\volen\Documents\GitHub\ShoppingCart\ShoppingCart\db\ShoppingCartDB with class loader sun.misc.Launcher$AppClassLoader@c22b29a 
-Wed Nov 28 22:20:29 EST 2012 Thread[DRDAConnThread_4,5,main] (DATABASE = ShoppingCartDB), (DRDAID = {2}), Database 'ShoppingCartDB' shutdown.
-----------------------------------------------------------------
-Wed Nov 28 22:20:42 EST 2012:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance 6c44409f-013b-4a2e-0417-000057c82cba 
-on database directory C:\Users\volen\Documents\GitHub\ShoppingCart\ShoppingCart\db\ShoppingCartDB  with class loader sun.misc.Launcher$AppClassLoader@c22b29a 
-Loaded from file:/C:/Program%20Files/Java/jdk1.7.0_06/db/lib/derby.jar
-java.vendor=Oracle Corporation
-java.runtime.version=1.7.0_06-b24
-user.dir=C:\Program Files\Java\jdk1.7.0_06\db
-derby.system.home=C:\Users\volen\Documents\GitHub\ShoppingCart\ShoppingCart\db
-Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-Thu Nov 29 00:59:41 EST 2012: Shutting down Derby engine
-----------------------------------------------------------------
-Thu Nov 29 00:59:41 EST 2012:
-Shutting down instance 6c44409f-013b-4a2e-0417-000057c82cba on database directory C:\Users\volen\Documents\GitHub\ShoppingCart\ShoppingCart\db\ShoppingCartDB with class loader sun.misc.Launcher$AppClassLoader@c22b29a 
-----------------------------------------------------------------

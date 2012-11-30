@@ -18,12 +18,13 @@ public class Product {
     private String mTitle;
     private String mDescription;
     private BigDecimal mSalePrice;
-    private Color mColor;
+    private String mColor;
     private String mCategory;
     private ProductSize mSize;
 
     public Product(String sku) {
         mSKU = sku;
+        mSalePrice = BigDecimal.ZERO;
     }
 
     /**
@@ -78,14 +79,14 @@ public class Product {
     /**
      * @return the mColor
      */
-    public Color getColor() {
+    public String getColor() {
         return mColor;
     }
 
     /**
      * @param mColor the mColor to set
      */
-    public void setColor(Color mColor) {
+    public void setColor(String mColor) {
         this.mColor = mColor;
     }
 

@@ -6,6 +6,7 @@ package Store;
 
 import Repositories.UserRepository.Customer;
 import Repositories.UserRepository.Manager;
+import Repositories.UserRepository.UserInfo;
 
 /**
  *
@@ -14,4 +15,5 @@ import Repositories.UserRepository.Manager;
 public interface IBaseStoreView {
     public Customer customerLogin(String email, String password);
     public Manager managerLogin(String email, String password);
+    public UserInfo login(String email, String password);
 }

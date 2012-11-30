@@ -35,7 +35,7 @@ public class Inventory implements Iterable<Product> {
         readProducts();
     }
 
-    Boolean addToCart(ShoppingCart userCart, Product product, int quantity) {
+    boolean addToCart(ShoppingCart userCart, Product product, int quantity) {
         if (mRepository.reserveProduct(product.getSKU(), quantity)) {
             userCart.addItem(product, quantity);
             return true;
@@ -43,10 +43,8 @@ public class Inventory implements Iterable<Product> {
         return false;
     }
 
-    void removeFromCart(ShoppingCart userCart, Product product, int quantity)
-    {
+    void removeFromCart(ShoppingCart userCart, Product product, int quantity) {
         userCart.removeItem(product);
-        mRepository.releaseProduct(product.getSKU(), quantity);
     }
 
     // Strategy Pattern

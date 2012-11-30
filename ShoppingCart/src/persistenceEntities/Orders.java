@@ -5,6 +5,7 @@
 package persistenceEntities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -33,6 +34,16 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Orders.findByOrderDate", query = "SELECT o FROM Orders o WHERE o.orderDate = :orderDate"),
     @NamedQuery(name = "Orders.findByOrderRange", query = "SELECT o FROM Orders o WHERE o.orderDate BETWEEN :from and :to")})
 public class Orders implements Serializable {
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Basic(optional = false)
+    @Column(name = "TOTAL_REVENUE")
+    private BigDecimal totalRevenue;
+    @Basic(optional = false)
+    @Column(name = "TOTAL_DISCOUNT")
+    private BigDecimal totalDiscount;
+    @Basic(optional = false)
+    @Column(name = "TOTAL_COST")
+    private BigDecimal totalCost;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -116,6 +127,30 @@ public class Orders implements Serializable {
     @Override
     public String toString() {
         return "db.Orders[ orderNumber=" + orderNumber + " ]";
+    }
+
+    public BigDecimal getTotalRevenue() {
+        return totalRevenue;
+    }
+
+    public void setTotalRevenue(BigDecimal totalRevenue) {
+        this.totalRevenue = totalRevenue;
+    }
+
+    public BigDecimal getTotalDiscount() {
+        return totalDiscount;
+    }
+
+    public void setTotalDiscount(BigDecimal totalDiscount) {
+        this.totalDiscount = totalDiscount;
+    }
+
+    public BigDecimal getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(BigDecimal totalCost) {
+        this.totalCost = totalCost;
     }
     
 }

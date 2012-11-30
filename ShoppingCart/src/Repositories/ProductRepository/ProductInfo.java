@@ -17,6 +17,11 @@ public class ProductInfo {
     private int mReserved;
     private BigDecimal mPurchasePrice;
     private double mPercentDiscount;
+    
+    public ProductInfo()
+    {
+        mPurchasePrice = BigDecimal.ZERO;
+    }
 
     /**
      * @return the mProduct

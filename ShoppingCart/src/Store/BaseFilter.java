@@ -4,7 +4,6 @@
  */
 package Store;
 
-import java.awt.Color;
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -19,7 +18,7 @@ public abstract class BaseFilter {
     @Override
     public abstract String toString();
 
-    public abstract Boolean isMatch(Color color, ProductSize size, String query);
+    public abstract Boolean isMatch(String color, ProductSize size, String query);
 
     public BaseFilter combineFilter(BaseFilter filter) {
         if (this instanceof AggregateFilter) {
@@ -31,18 +30,18 @@ public abstract class BaseFilter {
         }
     }
 
-    public static BaseFilter createFilter(String query) {
+    public static BaseFilter CreateQueryFilter(String query) {
         assert (query != null);
 
         return new QueryFilter(query);
     }
 
-    public static BaseFilter createFilter(Color color) {
+    public static BaseFilter createColorFilter(String color) {
         assert (color != null);
         return new ColorFilter(color);
     }
 
-    public static BaseFilter createFilter(ProductSize size) {
+    public static BaseFilter createSizeFilter(ProductSize size) {
         return new SizeFilter(size);
     }
 
@@ -60,7 +59,7 @@ public abstract class BaseFilter {
         }
 
         @Override
-        public Boolean isMatch(Color color, ProductSize size, String query) {
+        public Boolean isMatch(String color, ProductSize size, String query) {
             if (query == null) {
                 return false;
             }
@@ -70,9 +69,9 @@ public abstract class BaseFilter {
 
     private static class ColorFilter extends BaseFilter {
 
-        public final Color ProductColor;
+        public final String ProductColor;
 
-        ColorFilter(Color color) {
+        ColorFilter(String color) {
             ProductColor = color;
         }
 
@@ -82,8 +81,8 @@ public abstract class BaseFilter {
         }
 
         @Override
-        public Boolean isMatch(Color color, ProductSize size, String query) {
-            return color == ProductColor;
+        public Boolean isMatch(String color, ProductSize size, String query) {
+            return color.equals(ProductColor);
         }
     }
 
@@ -101,7 +100,7 @@ public abstract class BaseFilter {
         }
 
         @Override
-        public Boolean isMatch(Color color, ProductSize size, String query) {
+        public Boolean isMatch(String color, ProductSize size, String query) {
             return ProductSize == size;
         }
     }
@@ -126,7 +125,7 @@ public abstract class BaseFilter {
         }
 
         @Override
-        public Boolean isMatch(Color color, ProductSize size, String query) {
+        public Boolean isMatch(String color, ProductSize size, String query) {
             for (BaseFilter filter : mSubFilters) {
                 if (filter.isMatch(color, size, query)) {
                     return true;

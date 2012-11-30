@@ -12,7 +12,7 @@ import Repositories.ProductRepository.Product;
  */
 public interface IManagerStoreView extends IBaseStoreView {
 
-    void updateItem(String sku, Product product);
+    void updateItem(Product product);
 
     void removeItem(String sku);
 
