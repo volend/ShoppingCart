@@ -18,7 +18,7 @@ public interface IUserRepository {
 
     UserInfo changePassword(String email, String currentPassword, String newPassword);
 
-    UserInfo createUser(UserInfo manager, UserInfo info);
+    UserInfo createUser(UserInfo info);
     void deleteUser(UserInfo info);
 
     Set<BillingInformation> getBillingInfo(UserInfo user);
