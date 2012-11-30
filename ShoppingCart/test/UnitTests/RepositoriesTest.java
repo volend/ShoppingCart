@@ -89,7 +89,6 @@ public class RepositoriesTest {
     @Test
     public void productsTest() {
         HashSet<ProductInfo> products = initializeProducts();
-
         for (ProductInfo info : products) {
             sMainRepository.addNewProduct(info);
         }
