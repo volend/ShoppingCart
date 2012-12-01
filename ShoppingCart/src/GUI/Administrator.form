@@ -204,29 +204,32 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="lblFrom" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txtFrom" linkSize="1" min="-2" pref="110" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="lblTotalRevenue" min="-2" pref="183" max="-2" attributes="0"/>
-                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="lblTotalDiscounts" alignment="0" pref="152" max="32767" attributes="0"/>
-                          <Component id="lblTotalCost" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                          <Component id="btnOK" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Component id="lblTo" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="txtTo" linkSize="1" min="-2" pref="108" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblTotalRevenue" min="-2" pref="183" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="lblTotalDiscounts" alignment="0" pref="152" max="32767" attributes="0"/>
+                                  <Component id="lblTotalCost" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="btnModifyInventory" alignment="0" min="-2" pref="171" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
-                      <Component id="btnModifyInventory" alignment="0" min="-2" pref="171" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblTo" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblFrom" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="txtFrom" linkSize="1" min="-2" pref="110" max="-2" attributes="0"/>
+                              <Component id="txtTo" linkSize="1" min="-2" pref="108" max="-2" attributes="0"/>
+                              <Component id="btnOK" alignment="1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="356" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace pref="335" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -242,12 +245,12 @@
                   <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblFrom" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtFrom" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtFrom" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblTo" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtTo" min="-2" pref="20" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lblTo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtTo" linkSize="2" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnOK" min="-2" pref="20" max="-2" attributes="0"/>

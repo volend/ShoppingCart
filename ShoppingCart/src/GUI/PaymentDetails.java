@@ -1,14 +1,18 @@
-
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package GUI;
 
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
+import javax.swing.JOptionPane;
 
 
 /**
- * Class extending JFrame to display and retain payment and billing address details.
+ *
  * @author Miguel Silva
  */
 public class PaymentDetails extends javax.swing.JFrame {
@@ -28,10 +32,7 @@ public PaymentDetails() {
         setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
     }
 
-    /**
-     * Method to close the current window..
-     */
-    public void close(){
+public void close(){
 
         WindowEvent winCLosingEvent = new WindowEvent(this,WindowEvent.WINDOW_CLOSING);
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winCLosingEvent);
@@ -88,6 +89,12 @@ public PaymentDetails() {
         lblState.setText("State");
 
         lblZipCode.setText("Zip Code");
+
+        txtNameOnCreditCard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNameOnCreditCardActionPerformed(evt);
+            }
+        });
 
         btnCompleteOrder.setText("COMPLETE ORDER");
         btnCompleteOrder.addActionListener(new java.awt.event.ActionListener() {
@@ -211,20 +218,30 @@ public PaymentDetails() {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * Notifies the mouse event listener of the mouse event click to display the confirmation window.  
-     * @param evt Carries information about the event causing the method call.
-     */
     private void btnCompleteOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompleteOrderActionPerformed
+        if (txtNameOnCreditCard.getText().equals("")){                
+            JOptionPane.showMessageDialog(this, "Please enter the name on the credit card.");  
+        } else if (txtCreditCardNumber.getText().equals("")) { 
+            JOptionPane.showMessageDialog(this, "Please enter a valid credit card number.");              
+        } else if (txtExpDate.getText().equals("")) { 
+            JOptionPane.showMessageDialog(this, "Please enter the card number expiration date.");              
+        } else if (txtAddress1.getText().equals("")) { 
+            JOptionPane.showMessageDialog(this, "Please enter the first line of your address.");              
+        } else if (txtCity.getText().equals("")) { 
+            JOptionPane.showMessageDialog(this, "Please enter your city.");              
+        } else if (txtState.getText().equals("")) { 
+            JOptionPane.showMessageDialog(this, "Please enter the state you live in.");              
+        } else if (txtZipCode.getText().equals("")) { 
+            JOptionPane.showMessageDialog(this, "Please your zip code.");              
+        }
+         else {
         close();
         Confirmation c = new Confirmation();
+        c.setselectedProducts(selectedProducts);
+        c.Events();
         c.setVisible(true);
     }//GEN-LAST:event_btnCompleteOrderActionPerformed
-
-    /**
-     * Notifies the mouse event listener of the mouse event click to view the shopping cart window.  
-     * @param evt Carries information about the event causing the method call.
-     */
+    }
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         close();
         ShoppingCart s = new ShoppingCart();
@@ -232,7 +249,10 @@ public PaymentDetails() {
        
     }//GEN-LAST:event_btnBackActionPerformed
 
-    
+    private void txtNameOnCreditCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameOnCreditCardActionPerformed
+        
+    }//GEN-LAST:event_txtNameOnCreditCardActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -291,6 +311,10 @@ public PaymentDetails() {
     private javax.swing.JTextField txtZipCode;
     // End of variables declaration//GEN-END:variables
 
+    private String [][] selectedProducts;
     
-
+    public void setselectedProducts(String [][] p){
+        selectedProducts = p;        
+    }
+        
 }

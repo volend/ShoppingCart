@@ -1,13 +1,24 @@
-
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package GUI;
 
+import Repositories.UserRepository.AccessPrivileges;
+import Repositories.UserRepository.UserInfo;
+import Repositories.UserRepository.UserRepository;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author Miguel Silva
+ * @author Administrator
  */
 public class Administrator extends javax.swing.JFrame {
 
@@ -17,7 +28,7 @@ public class Administrator extends javax.swing.JFrame {
     public Administrator() {
         super("Welcome to V&M Online Shop");
         initComponents();
-        //Set frame size and resizable
+                //Set frame size and resizable
         setSize(900, 500);
         setResizable(true);   
         //Place frame in the middle of screen        
@@ -31,9 +42,6 @@ public class Administrator extends javax.swing.JFrame {
         
     }
 
-        /**
-         * Method to close the current window..
-         */
        public void close(){
 
         WindowEvent winCLosingEvent = new WindowEvent(this,WindowEvent.WINDOW_CLOSING);
@@ -187,24 +195,25 @@ public class Administrator extends javax.swing.JFrame {
             pnlFinancialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFinancialsLayout.createSequentialGroup()
                 .addGap(42, 42, 42)
-                .addGroup(pnlFinancialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlFinancialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlFinancialsLayout.createSequentialGroup()
-                        .addComponent(lblFrom)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblTotalRevenue, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnlFinancialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(lblTotalDiscounts, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                        .addComponent(lblTotalCost, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlFinancialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnOK)
-                        .addGroup(pnlFinancialsLayout.createSequentialGroup()
+                        .addGroup(pnlFinancialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTotalRevenue, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnlFinancialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(lblTotalDiscounts, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                                .addComponent(lblTotalCost, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnModifyInventory, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlFinancialsLayout.createSequentialGroup()
+                        .addGroup(pnlFinancialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblTo)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(lblFrom))
+                        .addGap(28, 28, 28)
+                        .addGroup(pnlFinancialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtTo, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(8, 8, 8)))
-                    .addComponent(btnModifyInventory, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(335, Short.MAX_VALUE))
+                            .addComponent(btnOK))
+                        .addGap(356, 356, 356))))
         );
 
         pnlFinancialsLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtFrom, txtTo});
@@ -223,7 +232,7 @@ public class Administrator extends javax.swing.JFrame {
                     .addComponent(lblFrom)
                     .addComponent(txtFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(pnlFinancialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlFinancialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTo)
                     .addComponent(txtTo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -232,6 +241,8 @@ public class Administrator extends javax.swing.JFrame {
                 .addComponent(btnModifyInventory)
                 .addGap(30, 30, 30))
         );
+
+        pnlFinancialsLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtFrom, txtTo});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -265,16 +276,34 @@ public class Administrator extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnAdminLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminLoginActionPerformed
-            pnlReports.setVisible(true);
-            pnlFinancials.setVisible(true);
-            txtAdminEmail.setVisible(false);
-            txtAdminPassword.setVisible(false);
-            btnBack.setVisible(false);
-            lblAdminEmail.setText("Welcome Mr. Administrator");
-            lblAdminPassword.setText("Administrator's name goes here.");
-            btnLogout.setVisible(true);
-            btnAdminLogin.setVisible(false);
+        UserRepository ur = new UserRepository();
+        HashMap<String, UserInfo> map = ur.getUserList();  
+        Set set = map.entrySet();       
+        Iterator iter = set.iterator();
+                     
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            Repositories.UserRepository.UserInfo ui = ((Repositories.UserRepository.UserInfo)entry.getValue());                                      
+                
+            if (ui.EmailAddress.equals(txtAdminEmail.getText()) && ui.Privileges.toString().equals("Full")){
+                
+                pnlReports.setVisible(true);
+                pnlFinancials.setVisible(true);
+                txtAdminEmail.setVisible(false);
+                txtAdminPassword.setVisible(false);
+                btnBack.setVisible(false);
+                lblAdminEmail.setText("Welcome Mr. Administrator");
+                lblAdminPassword.setText("Administrator's name goes here.");
+                btnLogout.setVisible(true);
+                btnAdminLogin.setVisible(false);
+
+                
+                return;
             
+            }               
+
+        }
+             JOptionPane.showMessageDialog(this, "Invalid Email and/or Password. Please try again.");   
     }//GEN-LAST:event_btnAdminLoginActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed

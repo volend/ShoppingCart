@@ -1,18 +1,33 @@
-
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package GUI;
 
-import Repositories.ProductRepository.Product;
+import Repositories.ProductRepository.ProductInfo;
+import Repositories.ProductRepository.ProductRepository;
+import Repositories.UserRepository.AccessPrivileges;
 import Repositories.UserRepository.UserInfo;
-import Store.Inventory;
-import Store.Store;
-import java.awt.Dimension;
+import Repositories.UserRepository.UserRepository;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
+import java.util.HashSet;
+import java.awt.event.MouseAdapter;
+import java.awt.Dimension;
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+
 
 /**
- * Class extending JFrame to add components and display selected products in shopping cart.
+ *
  * @author Miguel Silva
  */
 public class ShoppingCart extends javax.swing.JFrame {
@@ -30,24 +45,20 @@ public class ShoppingCart extends javax.swing.JFrame {
         //Place frame in the middle of screen
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
-        setLocation(size.width / 2 - getWidth() / 2, size.height / 2 - getHeight() / 2);
+        setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
         getProducts();
-
+        
         pnlRegister.setVisible(false);
         btnLogout.setVisible(false);
     }
 
-    /**
-     * Method to close the current window..
-     */
-
-    public void close() {
-
-        WindowEvent winCLosingEvent = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
-        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winCLosingEvent);
-
-    }
-
+        public void close(){
+            
+        WindowEvent winCLosingEvent = new WindowEvent(this,WindowEvent.WINDOW_CLOSING);
+        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winCLosingEvent);        
+        
+        }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -362,120 +373,122 @@ public class ShoppingCart extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    /**
-     * Method to instantiate mouse adapter and default table model.
-     */
-    public void Events() {
+   
+        public void Events()
+    {
         /*
-         TableColumn qtyColumn = jTable1.getColumnModel().getColumn(4);
-         JComboBox comboBox = new JComboBox();
-         comboBox.addItem("1");
-         comboBox.addItem("2");
-         comboBox.addItem("3");
-         comboBox.addItem("4");
-         comboBox.addItem("5");
-         comboBox.addItem("6");
-         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-         qtyColumn.setCellEditor(new DefaultCellEditor(comboBox));
-         qtyColumn.setCellRenderer(renderer);
-         */
+        TableColumn qtyColumn = jTable1.getColumnModel().getColumn(4);
+        JComboBox comboBox = new JComboBox();
+        comboBox.addItem("1");
+        comboBox.addItem("2");
+        comboBox.addItem("3");
+        comboBox.addItem("4");
+        comboBox.addItem("5");
+        comboBox.addItem("6");
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        qtyColumn.setCellEditor(new DefaultCellEditor(comboBox));
+        qtyColumn.setCellRenderer(renderer);
+        */
+        tblShoppingCartProducts.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = tblShoppingCartProducts.rowAtPoint(evt.getPoint());
+                int col = tblShoppingCartProducts.columnAtPoint(evt.getPoint());
+                if (row >= 0 && col >= 0) {
 
-
+                }
+            }
+        });
+        
+        
         tblShoppingCartProducts.setModel(new javax.swing.table.DefaultTableModel(
-                getselectedProducts(),
-                new String[]{
-                    "REMOVE", "DESCRIPTION", "SIZE", "COLOR", "QUANTITY", "PRICE"
-                }) {
-            Class[] types = new Class[]{
+            getselectedProducts(),
+            new String [] {
+                "REMOVE", "DESCRIPTION", "SIZE", "COLOR", "QUANTITY", "PRICE"
+            }
+        ) {
+            Class[] types = new Class [] {
                 java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Double.class
             };
-            boolean[] canEdit = new boolean[]{
+            boolean[] canEdit = new boolean [] {
                 true, false, false, false, true, true
             };
 
-            @Override
             public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
+                return types [columnIndex];
             }
 
-            @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
+                return canEdit [columnIndex];
             }
         });
-
+        
     }
-
+    
+        
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-
-        UserInfo user = Store.getInstance().login(txtEmail.getText(), new String(txtPassword.getPassword()));
-
-        if (user == null) {
-            // Login incorrect
-            JOptionPane.showMessageDialog(
-                    this, "Incorrect email/password");
-            lblEmail.setText("");
-        } else {
-            txtEmail.setVisible(false);
-            txtPassword.setVisible(false);
-            btnRegister.setVisible(false);
-            btnLogin.setVisible(false);
-            lblEmail.setText(String.format("Welcome Dear, %s", user.FirstName));
-            lblLoginPassword.setText("You may now checkout.");
-            btnLogout.setVisible(true);
-            btnCheckout.setEnabled(true);
+                        
+        UserRepository ur = new UserRepository();
+        HashMap<String, UserInfo> map = ur.getUserList();  
+        Set set = map.entrySet();       
+        Iterator iter = set.iterator();
+                     
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            Repositories.UserRepository.UserInfo ui = ((Repositories.UserRepository.UserInfo)entry.getValue());                     
+                                    
+            if (ui.EmailAddress.equals(txtEmail.getText())){
+                txtEmail.setVisible(false);
+                txtPassword.setVisible(false);
+                btnRegister.setVisible(false);
+                btnLogin.setVisible(false);        
+                lblEmail.setText("Welcome Dear Customer....");
+                lblLoginPassword.setText("You may now checkout.");
+                btnLogout.setVisible(true);
+                btnCheckout.setEnabled(true);
+                
+                return;
+            }
+                        
         }
+        
+        JOptionPane.showMessageDialog(this, "Invalid Email and/or Password. Please try again.");
+        
+            
     }//GEN-LAST:event_btnLoginActionPerformed
 
-    /**
-     * Notifies the mouse event listener of the mouse event click to view the payment details window.  
-     * @param evt Carries information about the event causing the method call.
-     */
     private void btnCheckoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckoutActionPerformed
-
+        
         close();
         PaymentDetails c = new PaymentDetails();
-        c.setVisible(true);
+        c.setselectedProducts(selectedProducts);
+        c.setVisible(true);        
     }//GEN-LAST:event_btnCheckoutActionPerformed
 
-    /**
-     * Notifies the mouse event listener of the mouse event click to view the register panel.  
-     * @param evt Carries information about the event causing the method call.
-     */        
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         pnlRegister.setVisible(true);
         pnlLogin.setVisible(false);
-
+        
+        
     }//GEN-LAST:event_btnRegisterActionPerformed
 
-    /**
-     * Notifies the mouse event listener of the mouse event click to view the welcome/products window.  
-     * @param evt Carries information about the event causing the method call.
-     */
+ 
+    
+
     private void btnAddMoreProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMoreProductsActionPerformed
         close();
         WelcomePage w = new WelcomePage();
         w.setVisible(true);
     }//GEN-LAST:event_btnAddMoreProductsActionPerformed
 
-    /**
-     * Notifies the mouse event listener of the mouse event click to view the login panel.  
-     * @param evt Carries information about the event causing the method call.
-     */
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-
+        
         pnlLogin.setVisible(true);
         pnlRegister.setVisible(false);
-
+        
     }//GEN-LAST:event_btnBackActionPerformed
 
-    /**
-     * Notifies the mouse event listener of the mouse event click to remove products from the shopping cart table.  
-     * @param evt Carries information about the event causing the method call.
-     */
-
     private void btnUpdateCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateCartActionPerformed
-    
         DefaultTableModel dtm = (DefaultTableModel) tblShoppingCartProducts.getModel();
         
         int nRow = dtm.getRowCount();        
@@ -504,36 +517,68 @@ public class ShoppingCart extends javax.swing.JFrame {
         Events();
     }//GEN-LAST:event_btnUpdateCartActionPerformed
 
-    
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+
+        btnCheckout.setEnabled(false);
         pnlLogin.setVisible(true);
         btnLogout.setVisible(false);
         txtEmail.setVisible(true);
         txtPassword.setVisible(true);
         btnRegister.setVisible(true);
-        btnLogin.setVisible(true);
+        btnLogin.setVisible(true);        
         lblEmail.setText("Email");
         lblLoginPassword.setText("Password");
-        btnLogout.setVisible(false);
+        btnLogout.setVisible(false);                    
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-        pnlRegister.setVisible(false);
-        pnlLogin.setVisible(true);
-        btnCheckout.setEnabled(true);
-
-        txtEmail.setVisible(false);
-        txtPassword.setVisible(false);
-        btnRegister.setVisible(false);
-        btnLogin.setVisible(false);
-        lblEmail.setText("Welcome Dear Customer....");
-        lblLoginPassword.setText("You may now checkout.");
-        btnLogout.setVisible(true);
-        btnCheckout.setEnabled(true);
-
-
+        
+                          
+        if (txtRegisterEmail.getText().equals("")){                
+            JOptionPane.showMessageDialog(this, "Please enter a valid email");  
+        }   
+        else if (txtRegisterPassword.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "You must enter a password.");                    
+        }
+        else if (txtRepeatPassword.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "You must re-enter your password.");                    
+        } else if (txtFirstName.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "You must enter your name.");                    
+        } else if (txtLastName.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "You must enter your last name.");                    
+        } else {
+            /*
+            
+            Repositories.UserRepository UR = 
+            */
+            Repositories.UserRepository.UserInfo ui = 
+                    new Repositories.UserRepository.UserInfo(txtFirstName.getText(), txtLastName.getText(), txtRegisterEmail.getText(), txtRegisterPassword.getText(),
+                   "40009", AccessPrivileges.Limited);
+                    
+                    //(String fName, String lName, String email, String token, String number, AccessPrivileges privileges)
+            
+            Repositories.UserRepository.UserRepository ur = new UserRepository();
+            ur.createUser(ui);
+            
+            pnlRegister.setVisible(false);
+            pnlLogin.setVisible(true);
+            
+            btnCheckout.setEnabled(true);
+        
+            txtEmail.setVisible(false);
+            txtPassword.setVisible(false);
+            btnRegister.setVisible(false);
+            btnLogin.setVisible(false);        
+            lblEmail.setText("Welcome " + txtFirstName.getText() + " " + txtLastName.getText());        
+            lblLoginPassword.setText("You may now checkout.");
+            btnLogout.setVisible(true);
+            btnCheckout.setEnabled(true);
+        
     }//GEN-LAST:event_btnSubmitActionPerformed
-
+            
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -548,22 +593,16 @@ public class ShoppingCart extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
-
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ShoppingCart.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ShoppingCart.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ShoppingCart.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ShoppingCart.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ShoppingCart.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ShoppingCart.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ShoppingCart.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ShoppingCart.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -573,9 +612,10 @@ public class ShoppingCart extends javax.swing.JFrame {
                 new ShoppingCart().setVisible(true);
             }
         });
-
-
+               
+        
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddMoreProducts;
     private javax.swing.JButton btnBack;
@@ -607,48 +647,55 @@ public class ShoppingCart extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtRegisterPassword;
     private javax.swing.JPasswordField txtRepeatPassword;
     // End of variables declaration//GEN-END:variables
-    private Object[][] products;
+
+    private Object [][] products;
     /*
-     = new Object [][] {        
-     {new Boolean(false), "Beach T-Shirt", "L", "Purple", "1", new Double(10.5), 1},
-     {new Boolean(false),"Beach T-Shirt", "L", "Blue", "1", new Double(11.5), 2},
-     {new Boolean(false),"Beach T-Shirt", "L", "White", "1", new Double(12.5), 3},
-     {new Boolean(false),"Beach T-Shirt", "XL", "Purple", "1", new Double(13.5), 4},
-     {new Boolean(false),"Beach T-Shirt", "XL", "Blue", "1", new Double(11.5), 5},
-     {new Boolean(false),"Beach T-Shirt", "XL", "White", "1", new Double(12.5), 6},
-     {new Boolean(false),"T-Shirt", "L", "Purple", "1", new Double(10.5), 7},
-     {new Boolean(false),"T-Shirt", "L", "Blue", "1", new Double(11.5), 8},
-     {new Boolean(false),"T-Shirt", "L", "White", "1", new Double(12.5), 9},
-     {new Boolean(false),"T-Shirt", "XL", "Purple", "1", new Double(13.5), 10},
-     {new Boolean(false),"T-Shirt", "XL", "Blue", "1", new Double(11.5), 11},
-     {new Boolean(false),"T-Shirt", "XL", "White", "1", new Double(12.5), 12}                
-     };
-     */
-
-    private Object[][] getProducts() {
-        Inventory allProducts = Store.getInstance().getInventory();
-
-        products = new Object[allProducts.count()][7];
-        int i = 0;
-        for (Product p : allProducts) {
+    = new Object [][] {        
+        {new Boolean(false), "Beach T-Shirt", "L", "Purple", "1", new Double(10.5), 1},
+        {new Boolean(false),"Beach T-Shirt", "L", "Blue", "1", new Double(11.5), 2},
+        {new Boolean(false),"Beach T-Shirt", "L", "White", "1", new Double(12.5), 3},
+        {new Boolean(false),"Beach T-Shirt", "XL", "Purple", "1", new Double(13.5), 4},
+        {new Boolean(false),"Beach T-Shirt", "XL", "Blue", "1", new Double(11.5), 5},
+        {new Boolean(false),"Beach T-Shirt", "XL", "White", "1", new Double(12.5), 6},
+        {new Boolean(false),"T-Shirt", "L", "Purple", "1", new Double(10.5), 7},
+        {new Boolean(false),"T-Shirt", "L", "Blue", "1", new Double(11.5), 8},
+        {new Boolean(false),"T-Shirt", "L", "White", "1", new Double(12.5), 9},
+        {new Boolean(false),"T-Shirt", "XL", "Purple", "1", new Double(13.5), 10},
+        {new Boolean(false),"T-Shirt", "XL", "Blue", "1", new Double(11.5), 11},
+        {new Boolean(false),"T-Shirt", "XL", "White", "1", new Double(12.5), 12}                
+    };
+    */
+    
+    private Object[][] getProducts(){    
+        ProductRepository pr = new ProductRepository();
+        HashMap<String, ProductInfo> map = pr.getProductList();  
+        Set set = map.entrySet();       
+        Iterator iter = set.iterator();
+                
+        products = new Object [map.size()][7];
+        int i  = 0;
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            Repositories.ProductRepository.ProductInfo pi = ((Repositories.ProductRepository.ProductInfo)entry.getValue());                     
             products[i][0] = new Boolean(false);
-            products[i][1] = p.getTitle();
-            products[i][2] = p.getSize().toString();
-            products[i][3] = p.getColor().toString();
+            products[i][1] = pi.getProduct().getTitle();            
+            products[i][2] = pi.getProduct().getSize().toString();
+            products[i][3] = pi.getProduct().getColor().toString();
             products[i][4] = "1";
-            products[i][5] = p.getSalePrice();
-            products[i][6] = i + 1;
-            i++;
+            products[i][5] = pi.getProduct().getSalePrice();                    
+            products[i][6] = i+1;            
+            i++;           
         }
-
+        
         return products;
     }
-    private String[][] selectedProducts;
-
-    public void setselectedProducts(String[][] p) {
-        selectedProducts = p;
-
+    
+    private String [][] selectedProducts;
+    
+    public void setselectedProducts(String [][] p){
+        selectedProducts = p;        
     }
+    
     private Double totalOrder  = 0.0;
     
     private  Object [][] getselectedProducts()
@@ -680,5 +727,6 @@ public class ShoppingCart extends javax.swing.JFrame {
         
         return p;        
     }
-
+    
+    
 }
