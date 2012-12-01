@@ -12,7 +12,6 @@ import Repositories.UserRepository.BillingInformation;
 import Repositories.UserRepository.UserInfo;
 import Store.ProductSize;
 import java.math.BigDecimal;
-import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -38,7 +37,7 @@ public class RepositoriesTest {
     }
 
     @BeforeClass
-    public static void setUpClass() {
+    public static void setUpClass() throws Exception {
         sMainRepository = new DerbyDBRepository();
     }
 

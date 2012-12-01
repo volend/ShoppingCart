@@ -15,8 +15,10 @@ import Repositories.UserRepository.BillingInformation;
 import Repositories.UserRepository.IUserRepository;
 import Repositories.UserRepository.UserInfo;
 import Store.ProductSize;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.net.InetAddress;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -25,6 +27,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import org.apache.derby.drda.NetworkServerControl;
 
 /**
  *
@@ -36,7 +39,15 @@ public class DerbyDBRepository implements IOrderRepository, IUserRepository, IPr
     private final HashSet<String> mLoggedInEmails;
     private boolean mDisposed;
 
-    public DerbyDBRepository() {
+    public DerbyDBRepository() throws Exception {
+
+        NetworkServerControl serverControl = new NetworkServerControl();
+        serverControl.start(new PrintWriter(System.out, true));
+
+        NetworkServerControl server = null;
+        server = new NetworkServerControl(InetAddress.getLocalHost(), 1527, "Volen", "Miguel");
+        server.start(new PrintWriter(System.out));
+
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("ShoppingCartPU");
         mManager = factory.createEntityManager();
         mLoggedInEmails = new HashSet<>();
