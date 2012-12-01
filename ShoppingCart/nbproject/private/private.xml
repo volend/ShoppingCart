@@ -13,5 +13,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
         <file>file:/D:/GitHub/ShoppingCart/ShoppingCart/src/Repositories/UserRepository/Manager.java</file>
         <file>file:/D:/GitHub/ShoppingCart/ShoppingCart/src/Repositories/UserRepository/User.java</file>
+        <file>file:/D:/GitHub/ShoppingCart/ShoppingCart/src/Repositories/UserRepository/UserInfo.java</file>
+        <file>file:/D:/GitHub/ShoppingCart/ShoppingCart/src/Repositories/UserRepository/IUserRepository.java</file>
+        <file>file:/D:/GitHub/ShoppingCart/ShoppingCart/src/Repositories/UserRepository/Customer.java</file>
+        <file>file:/D:/GitHub/ShoppingCart/ShoppingCart/src/persistenceEntities/Users.java</file>
+        <file>file:/D:/GitHub/ShoppingCart/ShoppingCart/src/GUI/ShoppingCart.java</file>
     </open-files>
 </project-private>
