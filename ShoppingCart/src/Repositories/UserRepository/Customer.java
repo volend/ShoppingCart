@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Repositories.UserRepository;
 
 import Store.ICustomerStoreView;
@@ -13,7 +10,12 @@ import Store.ICustomerStoreView;
 public class Customer extends User {
     
     private final ICustomerStoreView mStoreView;
-    
+   
+    /**
+     * Creates new Customer object.
+     * @param customerStore The value to construct the Customer object.
+     * @param repository The repository value to construct the Customer object.
+     */
     public Customer(ICustomerStoreView customerStore, IUserRepository repository) {
         super(repository);
         mStoreView = customerStore;

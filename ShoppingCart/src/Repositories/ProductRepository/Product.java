@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Repositories.ProductRepository;
 
 import Store.ProductSize;
@@ -9,7 +6,7 @@ import java.awt.Color;
 import java.math.BigDecimal;
 
 /**
- *
+ * Class Product to deal with products.
  * @author volen
  */
 public class Product {
@@ -22,6 +19,10 @@ public class Product {
     private String mCategory;
     private ProductSize mSize;
 
+    /**
+     * Creates a new Product object.
+     * @param sku 
+     */
     public Product(String sku) {
         mSKU = sku;
         mSalePrice = BigDecimal.ZERO;

@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Repositories.UserRepository;
 
 import Repositories.ProductRepository.Product;
@@ -10,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- *
+ * Class User to deal with user details.
  * @author volen
  */
 public class User {
@@ -19,6 +16,10 @@ public class User {
     private final ShoppingCart mShoppingCart;
     private UserInfo mUserInfo;
 
+    /**
+     * Creates new User object.
+     * @param repository 
+     */
     public User(IUserRepository repository) {
         mRepository = repository;
         mShoppingCart = new ShoppingCart();

@@ -17,6 +17,15 @@ public class UserInfo {
     public final String PhoneNumber;
     public final AccessPrivileges Privileges;
 
+    /**
+     * Creates new UserInfo object.
+     * @param fName
+     * @param lName
+     * @param email
+     * @param token
+     * @param number
+     * @param privileges 
+     */
     public UserInfo(String fName, String lName, String email, String token, String number, AccessPrivileges privileges) {
         FirstName = fName;
         LastName = lName;

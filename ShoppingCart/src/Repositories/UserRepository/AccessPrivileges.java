@@ -5,7 +5,7 @@
 package Repositories.UserRepository;
 
 /**
- *
+ * Access Privileges enumerator with access values.
  * @author volen
  */
 public enum AccessPrivileges {

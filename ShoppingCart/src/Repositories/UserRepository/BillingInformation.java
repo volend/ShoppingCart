@@ -1,11 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Repositories.UserRepository;
 
 /**
- *
+ * Class BillingInformation to deal with billing information details.
  * @author volen
  */
 public class BillingInformation
@@ -22,14 +19,14 @@ public class BillingInformation
         private Integer mSecurityCode;
 
     /**
-     * @return the mAddressLine1
+     * @return the mAddressLine1 The value of the address line 1 of the current payment details.
      */
     public String getAddressLine1() {
         return mAddressLine1;
     }
 
     /**
-     * @param mAddressLine1 the mAddressLine1 to set
+     * @param mAddressLine1 the mAddressLine1 to set the address line 1 of the current payment details.
      */
     public void setAddressLine1(String addressLine1) {
         assert(addressLine1 != null);
@@ -38,14 +35,14 @@ public class BillingInformation
     }
 
     /**
-     * @return the mAddressLine2
+     * @return the mAddressLine2 the The value of the address line 2 of the current payment details.
      */
     public String getAddressLine2() {
         return mAddressLine2;
     }
 
     /**
-     * @param mAddressLine2 the mAddressLine2 to set
+     * @param mAddressLine2 the mAddressLine2 to set the address line 2 of the current payment details.
      */
     public void setAddressLine2(String addressLine2) {
         assert(addressLine2 != null);
@@ -54,14 +51,14 @@ public class BillingInformation
     }
 
     /**
-     * @return the mCity
+     * @return the mCity The value of the city of the current payment details.
      */
     public String getCity() {
         return mCity;
     }
 
     /**
-     * @param mCity the mCity to set
+     * @param mCity the mCity to set the city of the current payment details.
      */
     public void setCity(String city) {
         assert(city != null);
@@ -70,14 +67,14 @@ public class BillingInformation
     }
 
     /**
-     * @return the mState
+     * @return the mState The value of the state of the current payment details.
      */
     public String getState() {
         return mState;
     }
 
     /**
-     * @param mState the mState to set
+     * @param mState the mState to set the state of the current payment details.
      */
     public void setState(String state) {
         assert(state != null);
@@ -86,14 +83,14 @@ public class BillingInformation
     }
 
     /**
-     * @return the mZipCode
-     */
+     * @return the mZipCode The value of the zip code of the current payment details.
+     */ 
     public String getZipCode() {
         return mZipCode;
     }
 
     /**
-     * @param mZipCode the mZipCode to set
+     * @param mZipCode the mZipCode to set the zip code of the current payment details.
      */
     public void setZipCode(String zipCode) {
         assert(zipCode != null);
@@ -101,14 +98,14 @@ public class BillingInformation
     }
 
     /**
-     * @return the mAccountHolder
+     * @return the mAccountHolder The value of the account holder of the current payment details.
      */
     public String getAccountHolder() {
         return mAccountHolder;
     }
 
     /**
-     * @param mAccountHolder the mAccountHolder to set
+     * @param mAccountHolder the mAccountHolder to set the account holder of the current payment details.
      */
     public void setAccountHolder(String accountHolder) {
         assert(accountHolder != null);
@@ -117,14 +114,14 @@ public class BillingInformation
     }
 
     /**
-     * @return the mCardNumber
+     * @return the mCardNumber The value of the card number of the current payment details.
      */
     public String getCardNumber() {
         return mCardNumber;
     }
 
     /**
-     * @param mCardNumber the mCardNumber to set
+     * @param mCardNumber the mCardNumber to set the card number of the current payment details.
      */
     public void setCardNumber(String cardNumber) {
         assert(cardNumber != null);
@@ -133,14 +130,14 @@ public class BillingInformation
     }
 
     /**
-     * @return the mExpirationMonth
+     * @return the mExpirationMonth The value of the expiration month of the current payment details.
      */
     public Integer getExpirationMonth() {
         return mExpirationMonth;
     }
 
     /**
-     * @param mExpirationMonth the mExpirationMonth to set
+     * @param mExpirationMonth the mExpirationMonth to set the expiration month of the current payment details.
      */
     public void setExpirationMonth(Integer expirationMonth) {
         assert(expirationMonth >= 1 && expirationMonth <= 12);
@@ -149,14 +146,14 @@ public class BillingInformation
     }
 
     /**
-     * @return the mExpirationYear
+     * @return the mExpirationYear The value of the expiration year of the current payment details.
      */
     public Integer getExpirationYear() {
         return mExpirationYear;
     }
 
     /**
-     * @param mExpirationYear the mExpirationYear to set
+     * @param mExpirationYear the mExpirationYear to set the expiration year of the current payment details
      */
     public void setExpirationYear(Integer expirationYear) {
         assert(expirationYear > 2012 && expirationYear <= 2020);
@@ -165,14 +162,14 @@ public class BillingInformation
     }
 
     /**
-     * @return the mSecurityCode
+     * @return the mSecurityCode The value of the security code of the current payment details.
      */
     public Integer getSecurityCode() {
         return mSecurityCode;
     }
 
     /**
-     * @param mSecurityCode the mSecurityCode to set
+     * @param mSecurityCode the mSecurityCode to set the security code of the current payment details.
      */
     public void setSecurityCode(Integer securityCode) {
         this.mSecurityCode = securityCode;
