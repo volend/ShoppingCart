@@ -23,7 +23,7 @@ public interface IUserRepository {
 
     Set<BillingInformation> getBillingInfo(UserInfo user);
 
-    void addBillingInfo(UserInfo owner, BillingInformation info);
+    BillingInformation addBillingInfo(UserInfo owner, BillingInformation info);
 
     void removeBillingInfo(UserInfo owner, BillingInformation info);
 

@@ -67,16 +67,18 @@ public class DerbyDBRepository implements IOrderRepository, IUserRepository, IPr
     }
 
     @Override
-    public void completeOrder(OrderSummary summary) {
+    public OrderSummary completeOrder(OrderSummary summary) {
         Users owner = getUser(summary.CustomerEmail, "", false);
         if (owner == null) {
-            return;
+            return null;
         }
 
         Orders order = convert(summary, owner);
         mManager.getTransaction().begin();
         mManager.persist(order);
         mManager.getTransaction().commit();
+        mManager.refresh(owner);
+        return convert(order);
     }
 
     @Override
@@ -92,7 +94,7 @@ public class DerbyDBRepository implements IOrderRepository, IUserRepository, IPr
         BigDecimal revenue = BigDecimal.ZERO;
         for (Orders order : results) {
             if (order.getOrderDate().after(from) && order.getOrderDate().before(to)) {
-                revenue.add(order.getTotalRevenue());
+                revenue = revenue.add(order.getTotalRevenue());
             }
         }
 
@@ -105,7 +107,7 @@ public class DerbyDBRepository implements IOrderRepository, IUserRepository, IPr
         BigDecimal expense = BigDecimal.ZERO;
         for (Orders order : results) {
             if (order.getOrderDate().after(from) && order.getOrderDate().before(to)) {
-                expense.add(order.getTotalCost());
+                expense = expense.add(order.getTotalCost());
             }
         }
 
@@ -189,6 +191,8 @@ public class DerbyDBRepository implements IOrderRepository, IUserRepository, IPr
             return null;
         }
 
+        mManager.refresh(user);
+
         return new CollectionTransformer<Payment, BillingInformation>() {
             @Override
             public BillingInformation transform(Payment e) {
@@ -198,16 +202,23 @@ public class DerbyDBRepository implements IOrderRepository, IUserRepository, IPr
     }
 
     @Override
-    public void addBillingInfo(UserInfo owner, BillingInformation info) {
+    public BillingInformation addBillingInfo(UserInfo owner, BillingInformation info) {
         Users user = getUser(owner.EmailAddress, owner.AccessToken, true);
         if (user == null) {
-            return;
+            return null;
+        }
+
+        for (Payment p : user.getPaymentSet()) {
+            if (p.getPaymentMethodName().equals(info.getCardNumber())) {
+                return convert(p);
+            }
         }
 
         Payment payment = convert(info, user);
         mManager.getTransaction().begin();
         mManager.persist(payment);
         mManager.getTransaction().commit();
+        return convert(payment);
     }
 
     @Override
@@ -225,9 +236,9 @@ public class DerbyDBRepository implements IOrderRepository, IUserRepository, IPr
         }
 
         if (toRemove != null) {
-            user.getPaymentSet().remove(toRemove);
             mManager.getTransaction().begin();
-            mManager.persist(user);
+            mManager.remove(toRemove);
+            mManager.refresh(user);
             mManager.getTransaction().commit();
         }
     }
@@ -499,6 +510,7 @@ public class DerbyDBRepository implements IOrderRepository, IUserRepository, IPr
         result.setExpirationMonth(payment.getExpirationMonth());
         result.setExpirationYear(payment.getExpirationYear());
         result.setZipCode(payment.getZip());
+        result.setState(payment.getState());
         return result;
     }
 
@@ -515,7 +527,7 @@ public class DerbyDBRepository implements IOrderRepository, IUserRepository, IPr
         result.setCity(payment.getCity());
         result.setExpirationMonth(payment.getExpirationMonth());
         result.setExpirationYear(payment.getExpirationYear());
-        result.setZip(payment.getZipCode());
+        result.setState(payment.getState());
         return result;
     }
     // </editor-fold>

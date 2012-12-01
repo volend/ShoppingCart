@@ -14,9 +14,9 @@ public class BillingInformation
 	private String mZipCode;        
         private String mAccountHolder;
         private String mCardNumber;
-        private Integer mExpirationMonth;
-        private Integer mExpirationYear;
-        private Integer mSecurityCode;
+        private int mExpirationMonth;
+        private int mExpirationYear;
+        private int mSecurityCode;
 
     /**
      * @return the mAddressLine1 The value of the address line 1 of the current payment details.
@@ -132,14 +132,14 @@ public class BillingInformation
     /**
      * @return the mExpirationMonth The value of the expiration month of the current payment details.
      */
-    public Integer getExpirationMonth() {
+    public int getExpirationMonth() {
         return mExpirationMonth;
     }
 
     /**
      * @param mExpirationMonth the mExpirationMonth to set the expiration month of the current payment details.
      */
-    public void setExpirationMonth(Integer expirationMonth) {
+    public void setExpirationMonth(int expirationMonth) {
         assert(expirationMonth >= 1 && expirationMonth <= 12);
         
         this.mExpirationMonth = expirationMonth;
@@ -148,14 +148,14 @@ public class BillingInformation
     /**
      * @return the mExpirationYear The value of the expiration year of the current payment details.
      */
-    public Integer getExpirationYear() {
+    public int getExpirationYear() {
         return mExpirationYear;
     }
 
     /**
      * @param mExpirationYear the mExpirationYear to set the expiration year of the current payment details
      */
-    public void setExpirationYear(Integer expirationYear) {
+    public void setExpirationYear(int expirationYear) {
         assert(expirationYear > 2012 && expirationYear <= 2020);
         
         this.mExpirationYear = expirationYear;
@@ -164,14 +164,14 @@ public class BillingInformation
     /**
      * @return the mSecurityCode The value of the security code of the current payment details.
      */
-    public Integer getSecurityCode() {
+    public int getSecurityCode() {
         return mSecurityCode;
     }
 
     /**
      * @param mSecurityCode the mSecurityCode to set the security code of the current payment details.
      */
-    public void setSecurityCode(Integer securityCode) {
+    public void setSecurityCode(int securityCode) {
         this.mSecurityCode = securityCode;
     }
 }

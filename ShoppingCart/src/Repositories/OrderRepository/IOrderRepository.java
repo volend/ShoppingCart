@@ -21,7 +21,7 @@ public interface IOrderRepository {
      * Method to retrieve order summary.
      * @param summary 
      */
-    public void completeOrder(OrderSummary summary);
+    public OrderSummary completeOrder(OrderSummary summary);
    
     /**
      * Method to retrieve the next order number.     
