@@ -7,7 +7,7 @@
     <class>persistenceEntities.Product</class>
     <class>persistenceEntities.Orders</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/ShoppingCartDB"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/ShoppingCartDB;create=true;"/>
       <property name="javax.persistence.jdbc.password" value="Miguel"/>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
       <property name="javax.persistence.jdbc.user" value="Volen"/>

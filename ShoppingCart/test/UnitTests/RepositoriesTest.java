@@ -43,8 +43,10 @@ public class RepositoriesTest {
 
     @AfterClass
     public static void tearDownClass() {
-        sMainRepository.Dispose();
-        sMainRepository = null;
+        if (sMainRepository != null) {
+            sMainRepository.Dispose();
+            sMainRepository = null;
+        }
     }
 
     @Before

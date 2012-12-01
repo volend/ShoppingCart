@@ -5,16 +5,11 @@
 package GUI;
 
 import Repositories.ProductRepository.Product;
-import Repositories.ProductRepository.ProductInfo;
 import Store.Inventory;
 import Store.Store;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -45,7 +40,6 @@ public class WelcomePage extends javax.swing.JFrame {
 
         WindowEvent winCLosingEvent = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winCLosingEvent);
-
     }
 
     /**
