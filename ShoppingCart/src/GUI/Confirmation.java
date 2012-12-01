@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 package GUI;
 
@@ -32,7 +29,10 @@ public class Confirmation extends javax.swing.JFrame {
         setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
     }
 
-        public void close(){
+    /**
+     * Method to close the current window..
+     */
+    public void close(){
 
         WindowEvent winCLosingEvent = new WindowEvent(this,WindowEvent.WINDOW_CLOSING);
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winCLosingEvent);
@@ -146,7 +146,10 @@ public class Confirmation extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-       public void Events()
+    /**
+     * Method to instantiate mouse adapter and default table model.
+     */
+    public void Events()
     {
         /*
         TableColumn qtyColumn = jTable1.getColumnModel().getColumn(4);

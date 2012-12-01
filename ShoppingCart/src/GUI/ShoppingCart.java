@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package GUI;
 
 import Repositories.ProductRepository.Product;
@@ -12,9 +9,10 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Class extending JFrame to add components and display selected products in shopping cart.
  * @author Miguel Silva
  */
 public class ShoppingCart extends javax.swing.JFrame {
@@ -38,6 +36,10 @@ public class ShoppingCart extends javax.swing.JFrame {
         pnlRegister.setVisible(false);
         btnLogout.setVisible(false);
     }
+
+    /**
+     * Method to close the current window..
+     */
 
     public void close() {
 
@@ -360,7 +362,9 @@ public class ShoppingCart extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Method to instantiate mouse adapter and default table model.
+     */
     public void Events() {
         /*
          TableColumn qtyColumn = jTable1.getColumnModel().getColumn(4);
@@ -423,6 +427,10 @@ public class ShoppingCart extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
+    /**
+     * Notifies the mouse event listener of the mouse event click to view the payment details window.  
+     * @param evt Carries information about the event causing the method call.
+     */
     private void btnCheckoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckoutActionPerformed
 
         close();
@@ -430,18 +438,30 @@ public class ShoppingCart extends javax.swing.JFrame {
         c.setVisible(true);
     }//GEN-LAST:event_btnCheckoutActionPerformed
 
+    /**
+     * Notifies the mouse event listener of the mouse event click to view the register panel.  
+     * @param evt Carries information about the event causing the method call.
+     */        
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         pnlRegister.setVisible(true);
         pnlLogin.setVisible(false);
 
     }//GEN-LAST:event_btnRegisterActionPerformed
 
+    /**
+     * Notifies the mouse event listener of the mouse event click to view the welcome/products window.  
+     * @param evt Carries information about the event causing the method call.
+     */
     private void btnAddMoreProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMoreProductsActionPerformed
         close();
         WelcomePage w = new WelcomePage();
         w.setVisible(true);
     }//GEN-LAST:event_btnAddMoreProductsActionPerformed
 
+    /**
+     * Notifies the mouse event listener of the mouse event click to view the login panel.  
+     * @param evt Carries information about the event causing the method call.
+     */
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
 
         pnlLogin.setVisible(true);
@@ -449,9 +469,42 @@ public class ShoppingCart extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnBackActionPerformed
 
+    /**
+     * Notifies the mouse event listener of the mouse event click to remove products from the shopping cart table.  
+     * @param evt Carries information about the event causing the method call.
+     */
+
     private void btnUpdateCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateCartActionPerformed
+    
+        DefaultTableModel dtm = (DefaultTableModel) tblShoppingCartProducts.getModel();
+        
+        int nRow = dtm.getRowCount();        
+        int noProducts = 0;
+
+        for (int i = 0 ; i < nRow ; i++) {  
+                                   
+            if ((Boolean)dtm.getValueAt(i, 0) == false) {
+                noProducts++;
+            }     
+        }
+        
+        selectedProducts = new String[noProducts][2];
+        noProducts = 0;
+        for (int i = 0 ; i < nRow ; i++)            
+        {
+            if ((Boolean)dtm.getValueAt(i, 0) == false)
+            {
+                /*JComboBox combo = (JComboBox) jTable1.getCellEditor(i, 4);
+                Object selectedItem = combo.getSelectedItem();*/                               
+                selectedProducts[noProducts][0] = (String)dtm.getValueAt(i, 4);
+                selectedProducts[noProducts][1] = Integer.toString((Integer)products[i][6]);
+                noProducts++;
+            }            
+        }    
+        Events();
     }//GEN-LAST:event_btnUpdateCartActionPerformed
 
+    
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         pnlLogin.setVisible(true);
         btnLogout.setVisible(false);
@@ -596,14 +649,19 @@ public class ShoppingCart extends javax.swing.JFrame {
         selectedProducts = p;
 
     }
-    private double totalOrder = 0;
-
-    private Object[][] getselectedProducts() {
-        Object[][] p = new Object[selectedProducts.length][7];
-
-        for (int i = 0; i < selectedProducts.length; i++) {
-            for (int j = 0; j < products.length; j++) {
-                if (Integer.parseInt(selectedProducts[i][1]) == (Integer) products[j][6]) {
+    private Double totalOrder  = 0.0;
+    
+    private  Object [][] getselectedProducts()
+    {
+        Object [][] p = new Object [selectedProducts.length][7];
+        totalOrder  = 0.0;
+        
+        for (int i = 0; i < selectedProducts.length; i++)
+        {
+            for (int j = 0; j < products.length; j++)
+            {
+                if (Integer.parseInt(selectedProducts[i][1]) == (Integer)products[j][6])
+                {
                     p[i][0] = products[j][0];
                     p[i][1] = products[j][1];
                     p[i][2] = products[j][2];
@@ -611,15 +669,16 @@ public class ShoppingCart extends javax.swing.JFrame {
                     p[i][4] = products[j][4];
                     p[i][5] = products[j][5];
                     p[i][6] = products[j][6];
-
-                    totalOrder += 20; // add products[j][5]
-
+                                       
+                    //totalOrder.add((BigDecimal)products[j][5]); // add products[j][5]     
+                    totalOrder += Double.parseDouble(products[j][5].toString());
                 }
             }
-        }
-
-        lblTotal.setText(Double.toString(totalOrder));
-
-        return p;
+        }        
+                       
+        lblTotal.setText(totalOrder.toString());
+        
+        return p;        
     }
+
 }

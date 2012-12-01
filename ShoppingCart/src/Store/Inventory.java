@@ -26,6 +26,10 @@ public class Inventory implements Iterable<Product> {
     private final ArrayList<Product> mTemporaryProducts;
     private final IProductRepository mRepository;
 
+    /**
+     * Creates new Inventory object.
+     * @param productRepository 
+     */
     public Inventory(IProductRepository productRepository) {
         mItems = new HashMap<>();
         mFilters = new FilterCollection();

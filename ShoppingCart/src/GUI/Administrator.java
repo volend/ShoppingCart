@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package GUI;
 
 import java.awt.Dimension;
@@ -10,7 +7,7 @@ import java.awt.event.WindowEvent;
 
 /**
  *
- * @author Administrator
+ * @author Miguel Silva
  */
 public class Administrator extends javax.swing.JFrame {
 
@@ -20,7 +17,7 @@ public class Administrator extends javax.swing.JFrame {
     public Administrator() {
         super("Welcome to V&M Online Shop");
         initComponents();
-                //Set frame size and resizable
+        //Set frame size and resizable
         setSize(900, 500);
         setResizable(true);   
         //Place frame in the middle of screen        
@@ -34,6 +31,9 @@ public class Administrator extends javax.swing.JFrame {
         
     }
 
+        /**
+         * Method to close the current window..
+         */
        public void close(){
 
         WindowEvent winCLosingEvent = new WindowEvent(this,WindowEvent.WINDOW_CLOSING);

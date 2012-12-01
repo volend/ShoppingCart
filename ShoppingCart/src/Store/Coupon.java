@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Store;
 
 import java.math.BigDecimal;
@@ -15,6 +12,11 @@ public class Coupon
     private String mDiscountCategory;
     private BigDecimal mFlatDiscount;
 
+    /**
+     * Creates new Coupon object.
+     * @param category
+     * @param flatDiscount 
+     */
     public Coupon(String category, BigDecimal flatDiscount )
     {
         assert(category != null);

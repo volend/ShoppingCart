@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package GUI;
 
 import Repositories.ProductRepository.Product;
@@ -13,7 +10,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Class extending JFrame to add components and display products.
  * @author Miguel Silva
  */
 public class WelcomePage extends javax.swing.JFrame {
@@ -36,6 +33,9 @@ public class WelcomePage extends javax.swing.JFrame {
         btnViewShoppingCart.setVisible(false);
     }
 
+    /**
+     * Method to close the current window..
+     */
     public void close() {
 
         WindowEvent winCLosingEvent = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
@@ -204,6 +204,9 @@ public class WelcomePage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     //Custom Code
+    /**
+     * Method to instantiate mouse adapter and default table model.
+     */
     private void Events() {
 
         tblProducts.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -229,10 +232,16 @@ public class WelcomePage extends javax.swing.JFrame {
                 true, false, false, false, true, true
             };
 
+            /**
+             * Method to return the column index on the products table.
+             */
             public Class getColumnClass(int columnIndex) {
                 return types[columnIndex];
             }
 
+            /**
+             * Method to return true if event is null, or it is a MouseEvent with a click count > 2 and inHitRegion returns true.
+             */
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit[columnIndex];
             }
@@ -252,6 +261,11 @@ public class WelcomePage extends javax.swing.JFrame {
 
     }
 
+    
+    /**
+     * Notifies the mouse event listener of the mouse event click to add products to shopping cart.  
+     * @param evt Carries information about the event causing the method call.
+     */
     private void btnAddToCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddToCartActionPerformed
 
         DefaultTableModel dtm = (DefaultTableModel) tblProducts.getModel();
@@ -296,9 +310,12 @@ public class WelcomePage extends javax.swing.JFrame {
          
          */
 
-
     }//GEN-LAST:event_btnAddToCartActionPerformed
 
+    /**
+     * Notifies the mouse event listener of the mouse event click to view the shopping cart window.  
+     * @param evt Carries information about the event causing the method call.
+     */
     private void btnViewShoppingCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewShoppingCartActionPerformed
         if (selectedProducts != null) {
             p.setselectedProducts(selectedProducts);
@@ -311,6 +328,11 @@ public class WelcomePage extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnViewShoppingCartActionPerformed
+
+    /**
+     * Notifies the mouse event listener of the mouse event click to view the administrator window.  
+     * @param evt Carries information about the event causing the method call.
+     */
 
     private void cbxAdminLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxAdminLoginActionPerformed
         close();
@@ -369,10 +391,20 @@ public class WelcomePage extends javax.swing.JFrame {
     private javax.swing.JTable tblProducts;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
+
+    
+    /**
+     * 
+     */
     ShoppingCart p = new ShoppingCart();
+    
     private Object[][] products;
     private String[][] selectedProducts;
 
+    /**
+     * Method to get all products available in inventory.
+     * @return array of products available in inventory.
+     */    
     private Object[][] getProducts() {
         Inventory allProducts = Store.getInstance().getInventory();
 

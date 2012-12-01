@@ -35,6 +35,9 @@ public class Store implements ICustomerStoreView, IManagerStoreView {
         sSingleton = new Store();
     }
 
+    /**
+     * Creates new Store object.
+     */
     private Store() {
         mInitialized = false;
     }
