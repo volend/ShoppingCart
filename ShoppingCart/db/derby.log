@@ -1,21 +1,7 @@
-Fri Nov 30 20:32:57 EST 2012 : Apache Derby Network Server - 10.8.2.2 - (1181258) started and ready to accept connections on port 1527
+Fri Nov 30 21:44:27 EST 2012 : Apache Derby Network Server - 10.8.2.2 - (1181258) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Fri Nov 30 20:32:57 EST 2012:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-013b-5418-4f0f-000057c82cba 
-on database directory C:\Users\volen\Documents\GitHub\ShoppingCart\ShoppingCart\db\ShoppingCartDB  with class loader sun.misc.Launcher$AppClassLoader@c22b29a 
-Loaded from file:/C:/Program%20Files/Java/jdk1.7.0_06/db/lib/derby.jar
-java.vendor=Oracle Corporation
-java.runtime.version=1.7.0_06-b24
-user.dir=C:\Program Files\Java\jdk1.7.0_06\db
-derby.system.home=C:\Users\volen\Documents\GitHub\ShoppingCart\ShoppingCart\db
-Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-Fri Nov 30 20:32:58 EST 2012:
-Shutting down instance a816c00e-013b-5418-4f0f-000057c82cba on database directory C:\Users\volen\Documents\GitHub\ShoppingCart\ShoppingCart\db\ShoppingCartDB with class loader sun.misc.Launcher$AppClassLoader@c22b29a 
-Fri Nov 30 20:32:59 EST 2012 Thread[DRDAConnThread_4,5,main] (DATABASE = ShoppingCartDB), (DRDAID = {2}), Database 'ShoppingCartDB' shutdown.
-----------------------------------------------------------------
-Fri Nov 30 20:33:03 EST 2012:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance 6c44409f-013b-5418-4f0f-000057c82cba 
+Fri Nov 30 21:44:30 EST 2012:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-013b-5459-c695-000057c82cba 
 on database directory C:\Users\volen\Documents\GitHub\ShoppingCart\ShoppingCart\db\ShoppingCartDB  with class loader sun.misc.Launcher$AppClassLoader@c22b29a 
 Loaded from file:/C:/Program%20Files/Java/jdk1.7.0_06/db/lib/derby.jar
 java.vendor=Oracle Corporation

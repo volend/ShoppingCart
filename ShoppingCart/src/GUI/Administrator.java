@@ -4,9 +4,8 @@
  */
 package GUI;
 
-import Repositories.UserRepository.AccessPrivileges;
 import Repositories.UserRepository.UserInfo;
-import Repositories.UserRepository.UserRepository;
+import Store.Store;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
@@ -28,27 +27,27 @@ public class Administrator extends javax.swing.JFrame {
     public Administrator() {
         super("Welcome to V&M Online Shop");
         initComponents();
-                //Set frame size and resizable
+        //Set frame size and resizable
         setSize(900, 500);
-        setResizable(true);   
+        setResizable(true);
         //Place frame in the middle of screen        
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
-        setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
-       
+        setLocation(size.width / 2 - getWidth() / 2, size.height / 2 - getHeight() / 2);
+
         pnlReports.setVisible(false);
         pnlFinancials.setVisible(false);
         btnLogout.setVisible(false);
-        
+
     }
 
-       public void close(){
+    public void close() {
 
-        WindowEvent winCLosingEvent = new WindowEvent(this,WindowEvent.WINDOW_CLOSING);
+        WindowEvent winCLosingEvent = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winCLosingEvent);
-        
-        }
-    
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -268,49 +267,36 @@ public class Administrator extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-           
-            close();
-            WelcomePage w = new WelcomePage();
-            w.setVisible(true);
-            
+
+        close();
+        WelcomePage w = new WelcomePage();
+        w.setVisible(true);
+
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnAdminLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminLoginActionPerformed
-        UserRepository ur = new UserRepository();
-        HashMap<String, UserInfo> map = ur.getUserList();  
-        Set set = map.entrySet();       
-        Iterator iter = set.iterator();
-                     
-        while (iter.hasNext()) {
-            Map.Entry entry = (Map.Entry) iter.next();
-            Repositories.UserRepository.UserInfo ui = ((Repositories.UserRepository.UserInfo)entry.getValue());                                      
-                
-            if (ui.EmailAddress.equals(txtAdminEmail.getText()) && ui.Privileges.toString().equals("Full")){
-                
-                pnlReports.setVisible(true);
-                pnlFinancials.setVisible(true);
-                txtAdminEmail.setVisible(false);
-                txtAdminPassword.setVisible(false);
-                btnBack.setVisible(false);
-                lblAdminEmail.setText("Welcome Mr. Administrator");
-                lblAdminPassword.setText("Administrator's name goes here.");
-                btnLogout.setVisible(true);
-                btnAdminLogin.setVisible(false);
 
-                
-                return;
-            
-            }               
-
+        UserInfo adminUser = Store.getInstance().login(txtAdminEmail.getText(), new String(txtAdminPassword.getPassword()));
+        if (adminUser == null) {
+            JOptionPane.showMessageDialog(this, "Invalid Email and/or Password. Please try again.");
+        } else {
+            pnlReports.setVisible(true);
+            pnlFinancials.setVisible(true);
+            txtAdminEmail.setVisible(false);
+            txtAdminPassword.setVisible(false);
+            btnBack.setVisible(false);
+            lblAdminEmail.setText("Welcome Mr. Administrator");
+            lblAdminPassword.setText(String.format("%s, %s", adminUser.LastName, adminUser.FirstName));
+            btnLogout.setVisible(true);
+            btnAdminLogin.setVisible(false);
         }
-             JOptionPane.showMessageDialog(this, "Invalid Email and/or Password. Please try again.");   
     }//GEN-LAST:event_btnAdminLoginActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-            close();
-            WelcomePage w = new WelcomePage();
-            w.setVisible(true);
-            
+        close();
+        WelcomePage w = new WelcomePage();
+        w.setVisible(true);
+
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     /**
@@ -327,16 +313,22 @@ public class Administrator extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Administrator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Administrator.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Administrator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Administrator.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Administrator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Administrator.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Administrator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Administrator.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -347,7 +339,6 @@ public class Administrator extends javax.swing.JFrame {
             }
         });
     }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdminLogin;
     private javax.swing.JButton btnBack;
