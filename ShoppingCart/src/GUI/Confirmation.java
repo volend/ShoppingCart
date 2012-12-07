@@ -2,13 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package GUI;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.MouseAdapter;
+import java.util.Set;
 import javax.swing.JFrame;
 
 /**
@@ -25,20 +25,20 @@ public class Confirmation extends javax.swing.JFrame {
         initComponents();
         //Set frame size and resizable
         setSize(900, 500);
-        setResizable(true);   
+        setResizable(true);
         //Place frame in the middle of screen        
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
-        setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
+        setLocation(size.width / 2 - getWidth() / 2, size.height / 2 - getHeight() / 2);
     }
 
-        public void close(){
+    public void close() {
 
-        WindowEvent winCLosingEvent = new WindowEvent(this,WindowEvent.WINDOW_CLOSING);
+        WindowEvent winCLosingEvent = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winCLosingEvent);
 
-        }
-    
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -146,47 +146,45 @@ public class Confirmation extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-       public void Events()
-    {
+
+    public void Events() {
         /*
-        TableColumn qtyColumn = jTable1.getColumnModel().getColumn(4);
-        JComboBox comboBox = new JComboBox();
-        comboBox.addItem("1");
-        comboBox.addItem("2");
-        comboBox.addItem("3");
-        comboBox.addItem("4");
-        comboBox.addItem("5");
-        comboBox.addItem("6");
-        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-        qtyColumn.setCellEditor(new DefaultCellEditor(comboBox));
-        qtyColumn.setCellRenderer(renderer);
-        */
-        
-         tblPurchaseSummary.setModel(new javax.swing.table.DefaultTableModel(
-            getselectedProducts(),
-            new String [] {
-                "DESCRIPTION", "SIZE", "COLOR", "QUANTITY", "PRICE"
-            }
-        ) {
-            Class[] types = new Class [] {
+         TableColumn qtyColumn = jTable1.getColumnModel().getColumn(4);
+         JComboBox comboBox = new JComboBox();
+         comboBox.addItem("1");
+         comboBox.addItem("2");
+         comboBox.addItem("3");
+         comboBox.addItem("4");
+         comboBox.addItem("5");
+         comboBox.addItem("6");
+         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+         qtyColumn.setCellEditor(new DefaultCellEditor(comboBox));
+         qtyColumn.setCellRenderer(renderer);
+         */
+
+        tblPurchaseSummary.setModel(new javax.swing.table.DefaultTableModel(
+                getselectedProducts(),
+                new String[]{
+                    "DESCRIPTION", "SIZE", "COLOR", "QUANTITY", "PRICE"
+                }) {
+            Class[] types = new Class[]{
                 java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Double.class
             };
-            boolean[] canEdit = new boolean [] {
+            boolean[] canEdit = new boolean[]{
                 true, false, false, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
             }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
-        
+
     }
-    
-    
+
     private void btnDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoneActionPerformed
         close();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -198,7 +196,6 @@ public class Confirmation extends javax.swing.JFrame {
         w.setVisible(true);
     }//GEN-LAST:event_btnRegurnToProductsActionPerformed
 
-    
     /**
      * @param args the command line arguments
      */
@@ -242,52 +239,44 @@ public class Confirmation extends javax.swing.JFrame {
     private javax.swing.JPanel pnlConfirmation;
     private javax.swing.JTable tblPurchaseSummary;
     // End of variables declaration//GEN-END:variables
-
-    private Object [][] products = new Object [][] {        
-        {new Boolean(false),"Beach T-Shirt", "L", "Purple", "1", new Double(10.5), 1},
-        {new Boolean(false),"Beach T-Shirt", "L", "Blue", "1", new Double(11.5), 2},
-        {new Boolean(false),"Beach T-Shirt", "L", "White", "1", new Double(12.5), 3},
-        {new Boolean(false),"Beach T-Shirt", "XL", "Purple", "1", new Double(13.5), 4},
-        {new Boolean(false),"Beach T-Shirt", "XL", "Blue", "1", new Double(11.5), 5},
-        {new Boolean(false),"Beach T-Shirt", "XL", "White", "1", new Double(12.5), 6},
-        {new Boolean(false),"T-Shirt", "L", "Purple", "1", new Double(10.5), 7},
-        {new Boolean(false),"T-Shirt", "L", "Blue", "1", new Double(11.5), 8},
-        {new Boolean(false),"T-Shirt", "L", "White", "1", new Double(12.5), 9},
-        {new Boolean(false),"T-Shirt", "XL", "Purple", "1", new Double(13.5), 10},
-        {new Boolean(false),"T-Shirt", "XL", "Blue", "1", new Double(11.5), 11},
-        {new Boolean(false),"T-Shirt", "XL", "White", "1", new Double(12.5), 12}                
+    private Object[][] products = new Object[][]{
+        {new Boolean(false), "Beach T-Shirt", "L", "Purple", "1", new Double(10.5), 1},
+        {new Boolean(false), "Beach T-Shirt", "L", "Blue", "1", new Double(11.5), 2},
+        {new Boolean(false), "Beach T-Shirt", "L", "White", "1", new Double(12.5), 3},
+        {new Boolean(false), "Beach T-Shirt", "XL", "Purple", "1", new Double(13.5), 4},
+        {new Boolean(false), "Beach T-Shirt", "XL", "Blue", "1", new Double(11.5), 5},
+        {new Boolean(false), "Beach T-Shirt", "XL", "White", "1", new Double(12.5), 6},
+        {new Boolean(false), "T-Shirt", "L", "Purple", "1", new Double(10.5), 7},
+        {new Boolean(false), "T-Shirt", "L", "Blue", "1", new Double(11.5), 8},
+        {new Boolean(false), "T-Shirt", "L", "White", "1", new Double(12.5), 9},
+        {new Boolean(false), "T-Shirt", "XL", "Purple", "1", new Double(13.5), 10},
+        {new Boolean(false), "T-Shirt", "XL", "Blue", "1", new Double(11.5), 11},
+        {new Boolean(false), "T-Shirt", "XL", "White", "1", new Double(12.5), 12}
     };
+    private Set<ProductWrapper> selectedProducts;
 
-    
-    private String [][] selectedProducts;
-    public void setselectedProducts(String [][] p){
-        selectedProducts = p;                     
-    }
-    
-    private  Object [][] getselectedProducts()
-    {
-        Object [][] p = new Object [selectedProducts.length][7];
-        
-        for (int i = 0; i < selectedProducts.length; i++)
-        {
-            for (int j = 0; j < products.length; j++)
-            {
-                if (Integer.parseInt(selectedProducts[i][1]) == (Integer)products[j][6])
-                {
-                    p[i][0] = products[j][0];
-                    p[i][1] = products[j][1];
-                    p[i][2] = products[j][2];
-                    p[i][3] = products[j][3];
-                    p[i][4] = products[j][4];
-                    p[i][5] = products[j][5];
-                    p[i][6] = products[j][6];
-                }
-            }
-        }
-        
-        return p;
+    public void setselectedProducts(Set<ProductWrapper> products) {
+        selectedProducts = products;
     }
 
-    
-    
+    private Object[][] getselectedProducts() {
+//        Object[][] p = new Object[selectedProducts.length][7];
+//
+//        for (int i = 0; i < selectedProducts.length; i++) {
+//            for (int j = 0; j < products.length; j++) {
+//                if (Integer.parseInt(selectedProducts[i][1]) == (Integer) products[j][6]) {
+//                    p[i][0] = products[j][0];
+//                    p[i][1] = products[j][1];
+//                    p[i][2] = products[j][2];
+//                    p[i][3] = products[j][3];
+//                    p[i][4] = products[j][4];
+//                    p[i][5] = products[j][5];
+//                    p[i][6] = products[j][6];
+//                }
+//            }
+//        }
+//
+//        return p;
+        return null;
+    }
 }

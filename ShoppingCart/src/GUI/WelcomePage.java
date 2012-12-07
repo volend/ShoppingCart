@@ -10,7 +10,7 @@ import Store.Store;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
-import javax.swing.table.DefaultTableModel;
+import java.util.Set;
 
 /**
  *
@@ -25,7 +25,7 @@ public class WelcomePage extends javax.swing.JFrame {
 
         super("Welcome to V&M Online Shop");
         initComponents();
-        Events();
+        Initialize();
         //Set frame size and resizable
         setSize(900, 500);
         setResizable(true);
@@ -34,6 +34,7 @@ public class WelcomePage extends javax.swing.JFrame {
         Dimension size = toolkit.getScreenSize();
         setLocation(size.width / 2 - getWidth() / 2, size.height / 2 - getHeight() / 2);
         btnViewShoppingCart.setVisible(false);
+        selectedProducts = null;
     }
 
     public void close() {
@@ -76,29 +77,7 @@ public class WelcomePage extends javax.swing.JFrame {
             }
         });
 
-        tblProducts.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "SELECT ITEMS", "DESCRIPTION", "SIZE", "COLOR", "QUANTITY", "PRICE"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class
-            };
-            boolean[] canEdit = new boolean [] {
-                true, false, false, false, true, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        tblProducts.setModel(new ProductDataTable(true));
         jScrollPane1.setViewportView(tblProducts);
 
         cmbSize.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "Small", "Medium", "Large", "XLarge" }));
@@ -201,10 +180,10 @@ public class WelcomePage extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
     //Custom Code
-    private void Events() {
+    Set<ProductWrapper> selectedProducts;
 
+    private void Initialize() {
         tblProducts.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -215,100 +194,39 @@ public class WelcomePage extends javax.swing.JFrame {
             }
         });
 
+        ProductDataTable productTable = (ProductDataTable) tblProducts.getModel();
+        Inventory inventory = Store.getInstance().getInventory();
+        for (Product product : inventory) {
+            productTable.addProduct(new ProductWrapper(product));
+        }
 
-        tblProducts.setModel(new javax.swing.table.DefaultTableModel(
-                getProducts(),
-                new String[]{
-                    "SELECT ITEMS", "DESCRIPTION", "SIZE", "COLOR", "QUANTITY", "PRICE"
-                }) {
-            Class[] types = new Class[]{
-                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Double.class
-            };
-            boolean[] canEdit = new boolean[]{
-                true, false, false, false, true, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
-        });
-
-        /*TableColumn qtyColumn = jTable1.getColumnModel().getColumn(4);
-         JComboBox comboBox = new JComboBox();
-         comboBox.addItem("1");
-         comboBox.addItem("2");
-         comboBox.addItem("3");
-         comboBox.addItem("4");
-         comboBox.addItem("5");
-         comboBox.addItem("6");
-         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-         qtyColumn.setCellEditor(new DefaultCellEditor(comboBox));
-         qtyColumn.setCellRenderer(renderer);*/
-
+        shoppingCart.Initialize(this);
     }
 
     private void btnAddToCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddToCartActionPerformed
 
-        DefaultTableModel dtm = (DefaultTableModel) tblProducts.getModel();
+        ProductDataTable productTable = (ProductDataTable) tblProducts.getModel();
+        selectedProducts = productTable.getSelectedProducts();
 
-        int nRow = dtm.getRowCount();
-        int noProducts = 0;
-
-        for (int i = 0; i < nRow; i++) {
-
-            if ((Boolean) dtm.getValueAt(i, 0) == true) {
-                noProducts++;
-            }
+        if (selectedProducts.isEmpty()) {
+            lblAddViewErrorMessage.setText("Please select items to add to shopping cart.");
+        } else {
+            lblAddViewErrorMessage.setText("");
+            shoppingCart.addSelectedProducts(selectedProducts);
+            selectedProducts = null;
+            btnViewShoppingCart.setVisible(true);
         }
-
-        selectedProducts = new String[noProducts][2];
-        noProducts = 0;
-        for (int i = 0; i < nRow; i++) {
-            if ((Boolean) dtm.getValueAt(i, 0) == true) {
-
-                /*JComboBox combo = (JComboBox) jTable1.getCellEditor(i, 4);
-                 Object selectedItem = combo.getSelectedItem();*/
-
-                selectedProducts[noProducts][0] = (String) dtm.getValueAt(i, 4);
-                selectedProducts[noProducts][1] = Integer.toString((Integer) products[i][6]);
-                noProducts++;
-            }
-            if (noProducts == 0) {
-                lblAddViewErrorMessage.setText("Please select items to add to shopping cart.");
-            } else {
-                lblAddViewErrorMessage.setText("");
-                btnViewShoppingCart.setVisible(true);
-            }
-        }
-
-
-        /*
-         for (int i = 0 ; i < noProducts ; i++)            
-         {
-         System.out.println(" ID " + selectedProducts[i][1] + " - Qty " +  selectedProducts[i][0]);           
-            
-         } 
-         
-         */
-
-
     }//GEN-LAST:event_btnAddToCartActionPerformed
 
     private void btnViewShoppingCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewShoppingCartActionPerformed
-        if (selectedProducts != null) {
-            p.setselectedProducts(selectedProducts);
-            p.Events();
-            close();
-            p.setVisible(true);
+        if (shoppingCart.haveItemsInShoppingCart()) {
+            ProductDataTable productTable = (ProductDataTable) tblProducts.getModel();
+            productTable.unselectAll();
+            setVisible(false);
+            shoppingCart.setVisible(true);
         } else {
             lblAddViewErrorMessage.setVisible(true);
-
         }
-
     }//GEN-LAST:event_btnViewShoppingCartActionPerformed
 
     private void cbxAdminLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxAdminLoginActionPerformed
@@ -368,40 +286,5 @@ public class WelcomePage extends javax.swing.JFrame {
     private javax.swing.JTable tblProducts;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
-    ShoppingCart p = new ShoppingCart();
-    private Object[][] products;
-    /* = new Object [][] {        
-     {new Boolean(false), "Beach T-Shirt", "L", "Purple", "1", new Double(10.5), 1},
-     {new Boolean(false),"Beach T-Shirt", "L", "Blue", "1", new Double(11.5), 2},
-     {new Boolean(false),"Beach T-Shirt", "L", "White", "1", new Double(12.5), 3},
-     {new Boolean(false),"Beach T-Shirt", "XL", "Purple", "1", new Double(13.5), 4},
-     {new Boolean(false),"Beach T-Shirt", "XL", "Blue", "1", new Double(11.5), 5},
-     {new Boolean(false),"Beach T-Shirt", "XL", "White", "1", new Double(12.5), 6},
-     {new Boolean(false),"T-Shirt", "L", "Purple", "1", new Double(10.5), 7},
-     {new Boolean(false),"T-Shirt", "L", "Blue", "1", new Double(11.5), 8},
-     {new Boolean(false),"T-Shirt", "L", "White", "1", new Double(12.5), 9},
-     {new Boolean(false),"T-Shirt", "XL", "Purple", "1", new Double(13.5), 10},
-     {new Boolean(false),"T-Shirt", "XL", "Blue", "1", new Double(11.5), 11},
-     {new Boolean(false),"T-Shirt", "XL", "White", "1", new Double(12.5), 12}                
-     };*/
-    private String[][] selectedProducts;
-
-    private Object[][] getProducts() {
-        Inventory inventory = Store.getInstance().getInventory();
-
-        products = new Object[inventory.count()][7];
-        int i = 0;
-        for (Product p : inventory) {
-            products[i][0] = false;
-            products[i][1] = p.getTitle();
-            products[i][2] = p.getSize().toString();
-            products[i][3] = p.getColor().toString();
-            products[i][4] = "1";
-            products[i][5] = p.getSalePrice();
-            products[i][6] = i + 1;
-            i++;
-        }
-
-        return products;
-    }
+    ShoppingCart shoppingCart = new ShoppingCart();
 }

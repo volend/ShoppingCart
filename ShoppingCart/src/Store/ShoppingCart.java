@@ -45,4 +45,9 @@ public class ShoppingCart implements Iterable<Product> {
     public Iterator<Product> iterator() {
         return mOrderItems.keySet().iterator();
     }
+    
+    public int size()
+    {
+        return mOrderItems.size();
+    }
 }

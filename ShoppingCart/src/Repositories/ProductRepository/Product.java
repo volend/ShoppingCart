@@ -2,7 +2,6 @@
 package Repositories.ProductRepository;
 
 import Store.ProductSize;
-import java.awt.Color;
 import java.math.BigDecimal;
 
 /**

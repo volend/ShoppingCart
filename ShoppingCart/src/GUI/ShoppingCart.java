@@ -5,20 +5,16 @@
 package GUI;
 
 import Repositories.ProductRepository.Product;
-import Repositories.ProductRepository.ProductInfo;
 import Repositories.UserRepository.AccessPrivileges;
 import Repositories.UserRepository.UserInfo;
 import Store.Inventory;
 import Store.Store;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
-import java.awt.Dimension;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.math.BigDecimal;
 import java.util.Set;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -40,7 +36,6 @@ public class ShoppingCart extends javax.swing.JFrame {
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
         setLocation(size.width / 2 - getWidth() / 2, size.height / 2 - getHeight() / 2);
-        getProducts();
 
         pnlRegister.setVisible(false);
         btnLogout.setVisible(false);
@@ -110,29 +105,7 @@ public class ShoppingCart extends javax.swing.JFrame {
             }
         });
 
-        tblShoppingCartProducts.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "REMOVE", "DESCRIPTION", "SIZE", "COLOR", "QUANTITY", "PRICE"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                true, false, false, false, true, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        tblShoppingCartProducts.setModel(new ProductDataTable(false));
         sclPane.setViewportView(tblShoppingCartProducts);
 
         btnCheckout.setText("CHECKOUT");
@@ -368,20 +341,11 @@ public class ShoppingCart extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void Events() {
-        /*
-         TableColumn qtyColumn = jTable1.getColumnModel().getColumn(4);
-         JComboBox comboBox = new JComboBox();
-         comboBox.addItem("1");
-         comboBox.addItem("2");
-         comboBox.addItem("3");
-         comboBox.addItem("4");
-         comboBox.addItem("5");
-         comboBox.addItem("6");
-         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-         qtyColumn.setCellEditor(new DefaultCellEditor(comboBox));
-         qtyColumn.setCellRenderer(renderer);
-         */
+    public boolean haveItemsInShoppingCart() {
+        return this.getAddedItems().size() > 0;
+    }
+
+    public void Initialize(WelcomePage welcomePageForm) {
         tblShoppingCartProducts.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -392,28 +356,8 @@ public class ShoppingCart extends javax.swing.JFrame {
             }
         });
 
-
-        tblShoppingCartProducts.setModel(new javax.swing.table.DefaultTableModel(
-                getselectedProducts(),
-                new String[]{
-                    "REMOVE", "DESCRIPTION", "SIZE", "COLOR", "QUANTITY", "PRICE"
-                }) {
-            Class[] types = new Class[]{
-                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Double.class
-            };
-            boolean[] canEdit = new boolean[]{
-                true, false, false, false, true, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
-        });
-
+        mWelcomePageForm = welcomePageForm;
+        tblShoppingCartProducts.setModel(new ProductDataTable(false));
     }
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
@@ -434,11 +378,10 @@ public class ShoppingCart extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnCheckoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckoutActionPerformed
-
         close();
-        PaymentDetails c = new PaymentDetails();
-        c.setselectedProducts(selectedProducts);
-        c.setVisible(true);
+        PaymentDetails checkoutForm = new PaymentDetails();
+        checkoutForm.setselectedProducts(getAddedItems());
+        checkoutForm.setVisible(true);
     }//GEN-LAST:event_btnCheckoutActionPerformed
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
@@ -447,11 +390,14 @@ public class ShoppingCart extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btnRegisterActionPerformed
-
+    WelcomePage mWelcomePageForm;
     private void btnAddMoreProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMoreProductsActionPerformed
-        close();
-        WelcomePage w = new WelcomePage();
-        w.setVisible(true);
+        setVisible(false);
+        if (mWelcomePageForm != null) {
+            ProductDataTable productTable = (ProductDataTable) tblShoppingCartProducts.getModel();
+            productTable.unselectAll();
+            mWelcomePageForm.setVisible(true);
+        }
     }//GEN-LAST:event_btnAddMoreProductsActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -462,30 +408,8 @@ public class ShoppingCart extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnUpdateCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateCartActionPerformed
-        DefaultTableModel dtm = (DefaultTableModel) tblShoppingCartProducts.getModel();
-
-        int nRow = dtm.getRowCount();
-        int noProducts = 0;
-
-        for (int i = 0; i < nRow; i++) {
-
-            if ((Boolean) dtm.getValueAt(i, 0) == false) {
-                noProducts++;
-            }
-        }
-
-        selectedProducts = new String[noProducts][2];
-        noProducts = 0;
-        for (int i = 0; i < nRow; i++) {
-            if ((Boolean) dtm.getValueAt(i, 0) == false) {
-                /*JComboBox combo = (JComboBox) jTable1.getCellEditor(i, 4);
-                 Object selectedItem = combo.getSelectedItem();*/
-                selectedProducts[noProducts][0] = (String) dtm.getValueAt(i, 4);
-                selectedProducts[noProducts][1] = Integer.toString((Integer) products[i][6]);
-                noProducts++;
-            }
-        }
-        Events();
+        ProductDataTable productTable = (ProductDataTable) tblShoppingCartProducts.getModel();
+        productTable.removeSelectedProducts();
     }//GEN-LAST:event_btnUpdateCartActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
@@ -610,72 +534,26 @@ public class ShoppingCart extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtRegisterPassword;
     private javax.swing.JPasswordField txtRepeatPassword;
     // End of variables declaration//GEN-END:variables
-    private Object[][] products;
-    /*
-     = new Object [][] {        
-     {new Boolean(false), "Beach T-Shirt", "L", "Purple", "1", new Double(10.5), 1},
-     {new Boolean(false),"Beach T-Shirt", "L", "Blue", "1", new Double(11.5), 2},
-     {new Boolean(false),"Beach T-Shirt", "L", "White", "1", new Double(12.5), 3},
-     {new Boolean(false),"Beach T-Shirt", "XL", "Purple", "1", new Double(13.5), 4},
-     {new Boolean(false),"Beach T-Shirt", "XL", "Blue", "1", new Double(11.5), 5},
-     {new Boolean(false),"Beach T-Shirt", "XL", "White", "1", new Double(12.5), 6},
-     {new Boolean(false),"T-Shirt", "L", "Purple", "1", new Double(10.5), 7},
-     {new Boolean(false),"T-Shirt", "L", "Blue", "1", new Double(11.5), 8},
-     {new Boolean(false),"T-Shirt", "L", "White", "1", new Double(12.5), 9},
-     {new Boolean(false),"T-Shirt", "XL", "Purple", "1", new Double(13.5), 10},
-     {new Boolean(false),"T-Shirt", "XL", "Blue", "1", new Double(11.5), 11},
-     {new Boolean(false),"T-Shirt", "XL", "White", "1", new Double(12.5), 12}                
-     };
-     */
+    private BigDecimal totalOrder = BigDecimal.ZERO;
 
-    private Object[][] getProducts() {
+    public void addSelectedProducts(Set<ProductWrapper> products) {
+        ProductDataTable productTable = (ProductDataTable) tblShoppingCartProducts.getModel();
+        productTable.BeginUpdate();
+        for (ProductWrapper wrapper : products) {
+            wrapper.setSelected(false);
+            productTable.addProduct(wrapper);
+        }
+        productTable.EndUpdate();
 
-        Inventory inventory = Store.getInstance().getInventory();
-        products = new Object[inventory.count()][7];
-        int i = 0;
-        for (Product p : inventory) {
-            products[i][0] = false;
-            products[i][1] = p.getTitle();
-            products[i][2] = p.getSize().toString();
-            products[i][3] = p.getColor().toString();
-            products[i][4] = "1";
-            products[i][5] = p.getSalePrice();
-            products[i][6] = i + 1;
-            i++;
+        for (ProductWrapper wrapper : productTable.getAllProducts()) {
+            totalOrder = totalOrder.add(wrapper.getPrice());
         }
 
-        return products;
+        lblTotal.setText("$" + totalOrder.toPlainString());
     }
-    private String[][] selectedProducts;
 
-    public void setselectedProducts(String[][] p) {
-        selectedProducts = p;
-    }
-    private Double totalOrder = 0.0;
-
-    private Object[][] getselectedProducts() {
-        Object[][] p = new Object[selectedProducts.length][7];
-        totalOrder = 0.0;
-
-        for (int i = 0; i < selectedProducts.length; i++) {
-            for (int j = 0; j < products.length; j++) {
-                if (Integer.parseInt(selectedProducts[i][1]) == (Integer) products[j][6]) {
-                    p[i][0] = products[j][0];
-                    p[i][1] = products[j][1];
-                    p[i][2] = products[j][2];
-                    p[i][3] = products[j][3];
-                    p[i][4] = products[j][4];
-                    p[i][5] = products[j][5];
-                    p[i][6] = products[j][6];
-
-                    //totalOrder.add((BigDecimal)products[j][5]); // add products[j][5]     
-                    totalOrder += Double.parseDouble(products[j][5].toString());
-                }
-            }
-        }
-
-        lblTotal.setText(totalOrder.toString());
-
-        return p;
+    private Set<ProductWrapper> getAddedItems() {
+        ProductDataTable productTable = (ProductDataTable) tblShoppingCartProducts.getModel();
+        return productTable.getAllProducts();
     }
 }

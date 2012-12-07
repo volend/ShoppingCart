@@ -9,10 +9,6 @@ import Store.Store;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 import javax.swing.JOptionPane;
 
 /**

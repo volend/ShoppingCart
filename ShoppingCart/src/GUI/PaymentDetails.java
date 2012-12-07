@@ -8,8 +8,8 @@ import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
+import java.util.Set;
 import javax.swing.JOptionPane;
-
 
 /**
  *
@@ -20,26 +20,25 @@ public class PaymentDetails extends javax.swing.JFrame {
     /**
      * Creates new form PaymentDetails
      */
-public PaymentDetails() {
+    public PaymentDetails() {
         super("Welcome to V&M Online Shop");
         initComponents();
         //Set frame size and resizable
         setSize(900, 500);
-        setResizable(true);        
-        
+        setResizable(true);
+
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
-        setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
+        setLocation(size.width / 2 - getWidth() / 2, size.height / 2 - getHeight() / 2);
     }
 
-public void close(){
+    public void close() {
 
-        WindowEvent winCLosingEvent = new WindowEvent(this,WindowEvent.WINDOW_CLOSING);
+        WindowEvent winCLosingEvent = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winCLosingEvent);
-        
-        }
-    
-    
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -219,38 +218,36 @@ public void close(){
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCompleteOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompleteOrderActionPerformed
-        if (txtNameOnCreditCard.getText().equals("")){                
-            JOptionPane.showMessageDialog(this, "Please enter the name on the credit card.");  
-        } else if (txtCreditCardNumber.getText().equals("")) { 
-            JOptionPane.showMessageDialog(this, "Please enter a valid credit card number.");              
-        } else if (txtExpDate.getText().equals("")) { 
-            JOptionPane.showMessageDialog(this, "Please enter the card number expiration date.");              
-        } else if (txtAddress1.getText().equals("")) { 
-            JOptionPane.showMessageDialog(this, "Please enter the first line of your address.");              
-        } else if (txtCity.getText().equals("")) { 
-            JOptionPane.showMessageDialog(this, "Please enter your city.");              
-        } else if (txtState.getText().equals("")) { 
-            JOptionPane.showMessageDialog(this, "Please enter the state you live in.");              
-        } else if (txtZipCode.getText().equals("")) { 
-            JOptionPane.showMessageDialog(this, "Please your zip code.");              
-        }
-         else {
-        close();
-        Confirmation c = new Confirmation();
-        c.setselectedProducts(selectedProducts);
-        c.Events();
-        c.setVisible(true);
+        if (txtNameOnCreditCard.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Please enter the name on the credit card.");
+        } else if (txtCreditCardNumber.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid credit card number.");
+        } else if (txtExpDate.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Please enter the card number expiration date.");
+        } else if (txtAddress1.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Please enter the first line of your address.");
+        } else if (txtCity.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Please enter your city.");
+        } else if (txtState.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Please enter the state you live in.");
+        } else if (txtZipCode.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Please your zip code.");
+        } else {
+            close();
+            Confirmation summaryForm = new Confirmation();
+            //summaryForm.setselectedProducts(selectedProducts);
+            summaryForm.Events();
+            summaryForm.setVisible(true);
     }//GEN-LAST:event_btnCompleteOrderActionPerformed
     }
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         close();
         ShoppingCart s = new ShoppingCart();
         s.setVisible(true);
-       
+
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void txtNameOnCreditCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameOnCreditCardActionPerformed
-        
     }//GEN-LAST:event_txtNameOnCreditCardActionPerformed
 
     /**
@@ -287,7 +284,6 @@ public void close(){
             }
         });
     }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnCompleteOrder;
@@ -310,11 +306,11 @@ public void close(){
     private javax.swing.JTextField txtState;
     private javax.swing.JTextField txtZipCode;
     // End of variables declaration//GEN-END:variables
-
-    private String [][] selectedProducts;
     
-    public void setselectedProducts(String [][] p){
-        selectedProducts = p;        
+    
+    private Set<ProductWrapper> mSelectedProducts;
+
+    public void setselectedProducts(Set<ProductWrapper> selectedProcuts) {
+        mSelectedProducts = selectedProcuts;
     }
-        
 }
