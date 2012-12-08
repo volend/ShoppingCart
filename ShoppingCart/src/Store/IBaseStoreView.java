@@ -4,9 +4,11 @@
  */
 package Store;
 
+import Repositories.UserRepository.BillingInformation;
 import Repositories.UserRepository.Customer;
 import Repositories.UserRepository.Manager;
 import Repositories.UserRepository.UserInfo;
+import java.util.Set;
 
 /**
  *
@@ -17,4 +19,6 @@ public interface IBaseStoreView {
     public Manager managerLogin(String email, String password);
     public UserInfo login(String email, String password);
     public UserInfo registerUser(UserInfo info);
+    public Set<BillingInformation> getBillingInfo(UserInfo user);
+    public BillingInformation addBillingInfo(UserInfo user, BillingInformation info);
 }

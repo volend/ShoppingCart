@@ -4,10 +4,15 @@
  */
 package GUI;
 
+import Repositories.OrderRepository.OrderDetails;
+import Repositories.OrderRepository.OrderSummary;
+import Repositories.UserRepository.BillingInformation;
+import Repositories.UserRepository.UserInfo;
+import Store.Store;
 import java.awt.Dimension;
-import java.awt.event.WindowEvent;
 import java.awt.Toolkit;
-import java.awt.event.MouseAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Iterator;
 import java.util.Set;
 import javax.swing.JOptionPane;
 
@@ -77,7 +82,7 @@ public class PaymentDetails extends javax.swing.JFrame {
 
         lblCreditCardNumber.setText("Credit Card Number");
 
-        lblExpDate.setText("Expiration Date");
+        lblExpDate.setText("Expiration Date (mm/yy)");
 
         lblAddress1.setText("Address Line 1");
 
@@ -89,6 +94,7 @@ public class PaymentDetails extends javax.swing.JFrame {
 
         lblZipCode.setText("Zip Code");
 
+        txtNameOnCreditCard.setEditable(false);
         txtNameOnCreditCard.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNameOnCreditCardActionPerformed(evt);
@@ -220,7 +226,7 @@ public class PaymentDetails extends javax.swing.JFrame {
     private void btnCompleteOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompleteOrderActionPerformed
         if (txtNameOnCreditCard.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Please enter the name on the credit card.");
-        } else if (txtCreditCardNumber.getText().equals("")) {
+        } else if (txtCreditCardNumber.getText().equals("") || txtCreditCardNumber.getText().length() < 16) {
             JOptionPane.showMessageDialog(this, "Please enter a valid credit card number.");
         } else if (txtExpDate.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Please enter the card number expiration date.");
@@ -233,18 +239,54 @@ public class PaymentDetails extends javax.swing.JFrame {
         } else if (txtZipCode.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Please your zip code.");
         } else {
-            close();
+
+            String expiration = txtExpDate.getText();
+            String[] values = expiration.split("/");
+            if (values.length != 2) {
+                JOptionPane.showMessageDialog(this, "Invalid expiration.");
+                return;
+            }
+
+            BillingInformation billingInfo = new BillingInformation();
+            billingInfo.setAccountHolder(mLoggedInUser.EmailAddress);
+            billingInfo.setAddressLine1(txtAddress1.getText());
+            billingInfo.setAddressLine2(txtAddress2.getText());
+            billingInfo.setZipCode(txtZipCode.getText());
+            billingInfo.setCardNumber(txtCreditCardNumber.getText());
+            billingInfo.setState(txtState.getName());
+            billingInfo.setCity(txtCity.getText());
+
+            int month = Integer.parseInt(values[0]);
+            int year = Integer.parseInt(values[1]);
+            
+            billingInfo.setExpirationMonth(month);
+            billingInfo.setExpirationYear(year);
+            
+            if (mSavedBillingInfo == null || !billingInfo.getCardNumber().equals(mSavedBillingInfo))
+            {
+                mSavedBillingInfo = Store.getInstance().addBillingInfo(mLoggedInUser, billingInfo);
+            }
+            
+            OrderDetails order = Store.getInstance().startOrder(mLoggedInUser, billingInfo);
+            for (ProductWrapper productWrapper : mSelectedProducts)
+            {
+                order.addProduct(productWrapper.getProduct(), productWrapper.getQuantity());
+            }
+            
+            mSelectedProducts.clear();
+            
+            OrderSummary summary = Store.getInstance().completeOrder(order);
+
             Confirmation summaryForm = new Confirmation();
             //summaryForm.setselectedProducts(selectedProducts);
-            summaryForm.Events();
+            summaryForm.setOrderSummary(summary);
             summaryForm.setVisible(true);
+            close();
     }//GEN-LAST:event_btnCompleteOrderActionPerformed
     }
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         close();
-        ShoppingCart s = new ShoppingCart();
-        s.setVisible(true);
-
+        mShoppingCart.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void txtNameOnCreditCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameOnCreditCardActionPerformed
@@ -306,11 +348,44 @@ public class PaymentDetails extends javax.swing.JFrame {
     private javax.swing.JTextField txtState;
     private javax.swing.JTextField txtZipCode;
     // End of variables declaration//GEN-END:variables
-    
-    
     private Set<ProductWrapper> mSelectedProducts;
 
     public void setselectedProducts(Set<ProductWrapper> selectedProcuts) {
         mSelectedProducts = selectedProcuts;
+    }
+    ShoppingCart mShoppingCart;
+
+    void setShoppingCart(ShoppingCart shoppingCart) {
+        mShoppingCart = shoppingCart;
+    }
+    UserInfo mLoggedInUser;
+    BillingInformation mSavedBillingInfo;
+
+    void setLoggedInUser(UserInfo loggedUser) {
+        assert (loggedUser != null);
+        mLoggedInUser = loggedUser;
+
+        txtNameOnCreditCard.setText(String.format("%s, %s", mLoggedInUser.LastName, mLoggedInUser.FirstName));
+
+        Set<BillingInformation> paymentOptions = Store.getInstance().getBillingInfo(mLoggedInUser);
+        if (!paymentOptions.isEmpty()) {
+            Iterator<BillingInformation> iterator = paymentOptions.iterator();
+            BillingInformation lastBillingInfo = null;
+            while (iterator.hasNext()) {
+                lastBillingInfo = iterator.next();
+            }
+
+            txtCreditCardNumber.setText(lastBillingInfo.getCardNumber());
+            txtExpDate.setText(String.format("%d/%d", lastBillingInfo.getExpirationMonth(), lastBillingInfo.getExpirationYear()));
+            txtAddress1.setText(lastBillingInfo.getAddressLine1());
+            if (lastBillingInfo.getAddressLine2() != null) {
+                txtAddress2.setText(lastBillingInfo.getAddressLine2());
+            }
+            txtZipCode.setText(lastBillingInfo.getZipCode());
+            txtState.setText(lastBillingInfo.getState());
+            txtCity.setText(lastBillingInfo.getCity());
+
+            mSavedBillingInfo = lastBillingInfo;
+        }
     }
 }

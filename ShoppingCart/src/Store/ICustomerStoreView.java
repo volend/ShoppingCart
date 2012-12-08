@@ -8,7 +8,6 @@ package Store;
 import Repositories.OrderRepository.OrderDetails;
 import Repositories.OrderRepository.OrderSummary;
 import Repositories.UserRepository.*;
-import java.util.Date;
 import java.util.Set;
 
 /**
@@ -19,8 +18,8 @@ public interface ICustomerStoreView extends IBaseStoreView {
 
     Set<OrderSummary> getOrdersByCustomerEmail(String emailAddress);
 
-    OrderDetails startOrder(Customer buyer, BillingInformation payment);
-    void completeOrder(OrderDetails order);
+    OrderDetails startOrder(UserInfo buyer, BillingInformation payment);
+    OrderSummary completeOrder(OrderDetails order);
     void requestOrderCancelatlion(OrderDetails order);
 
     Inventory getInventory();

@@ -66,10 +66,9 @@ public class Store implements ICustomerStoreView, IManagerStoreView {
     public Inventory getInventory() {
         return new Inventory(mProductRepository);
     }
-    
+
     @Override
-    public UserInfo registerUser(UserInfo info)
-    {
+    public UserInfo registerUser(UserInfo info) {
         return mUserRepository.createUser(info);
     }
 
@@ -110,22 +109,32 @@ public class Store implements ICustomerStoreView, IManagerStoreView {
     }
 
     @Override
-    public OrderDetails startOrder(Customer buyer, BillingInformation payment) {
+    public OrderDetails startOrder(UserInfo buyer, BillingInformation payment) {
 
-        OrderDetails o = new OrderDetails(new Date(System.currentTimeMillis()), payment, buyer.getEmailAddress(), mOrderRepository.getNextOrderNumber());
+        OrderDetails o = new OrderDetails(new Date(System.currentTimeMillis()), payment, buyer.EmailAddress, mOrderRepository.getNextOrderNumber());
         return o;
     }
 
     @Override
-    public void completeOrder(OrderDetails order) {
+    public OrderSummary completeOrder(OrderDetails order) {
         OrderSummary summary = new OrderSummary(order.getOrderNumber(), order.getOrderDate(), order.getCustomerEmail(), order.getPaymentMethod(),
                 order.getOrderTotal(), order.getOrderDiscount(), getOrderCost(order));
-        mOrderRepository.completeOrder(summary);
+       return mOrderRepository.completeOrder(summary);
     }
 
     @Override
     public void requestOrderCancelatlion(OrderDetails order) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Set<BillingInformation> getBillingInfo(UserInfo user) {
+        return mUserRepository.getBillingInfo(user);
+    }
+
+    @Override
+    public BillingInformation addBillingInfo(UserInfo user, BillingInformation info) {
+        return mUserRepository.addBillingInfo(user, info);
     }
 
     private BigDecimal getOrderCost(OrderDetails order) {

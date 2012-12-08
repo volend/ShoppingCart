@@ -12,38 +12,38 @@ import java.util.HashSet;
  * @author volen
  */
 public class FilterCollection {
+
     private final HashSet<BaseFilter> mFilters;
-    
-    public FilterCollection()
-    {
+
+    public FilterCollection() {
         mFilters = new HashSet<>();
     }
-    
-    public void addFilter(BaseFilter filter)
-    {
-        assert(filter != null);
+
+    public void addFilter(BaseFilter filter) {
+        assert (filter != null);
         mFilters.add(filter);
     }
-    
-    public void removeFilter(BaseFilter filter)
-    {
-        assert(filter != null);
+
+    public void removeFilter(BaseFilter filter) {
+        assert (filter != null);
         mFilters.remove(filter);
     }
-    
-    public Boolean isMatch(Product product)
-    {
-        for (BaseFilter filter : mFilters)
-        {
+
+    public Boolean isMatch(Product product) {
+        for (BaseFilter filter : mFilters) {
             if (!filter.isMatch(product.getColor(), product.getSize(), product.getDescription())) {
                 return false;
             }
         }
         return true;
     }
-    
-    public BaseFilter[] getFilters()
-    {
-        return (BaseFilter[])mFilters.toArray();
+
+    public BaseFilter[] getFilters() {
+        BaseFilter[] filters = new BaseFilter[mFilters.size()];
+        int counter = 0;
+        for (BaseFilter filter : mFilters) {
+            filters[counter++] = filter;
+        }
+        return filters;
     }
 }

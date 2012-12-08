@@ -495,7 +495,7 @@ public class DerbyDBRepository implements IOrderRepository, IUserRepository, IPr
 
     private static OrderSummary convert(Orders order) {
         OrderSummary result = new OrderSummary(order.getOrderNumber(), order.getOrderDate(), order.getEmailAddress().getEmailAddress(),
-                convert(order.getPaymentMethodName()), order.getTotalRevenue(), order.getTotalDiscount(), order.getTotalDiscount());
+                convert(order.getPaymentMethodName()), order.getTotalRevenue(), order.getTotalDiscount(), order.getTotalCost());
         return result;
     }
 

@@ -4,11 +4,10 @@
  */
 package GUI;
 
+import Repositories.OrderRepository.OrderSummary;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
-import java.awt.event.MouseAdapter;
-import java.util.Set;
 import javax.swing.JFrame;
 
 /**
@@ -51,10 +50,17 @@ public class Confirmation extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         pnlConfirmation = new javax.swing.JPanel();
         btnDone = new javax.swing.JButton();
-        btnRegurnToProducts = new javax.swing.JButton();
         lblSummary = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblPurchaseSummary = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        txtOrderNumber = new javax.swing.JTextField();
+        txtOrderDate = new javax.swing.JTextField();
+        txtCustomerEmail = new javax.swing.JTextField();
+        txtTotalPrice = new javax.swing.JTextField();
+        txtPaymentMethod = new javax.swing.JTextField();
 
         jLabel1.setText("jLabel1");
 
@@ -69,68 +75,89 @@ public class Confirmation extends javax.swing.JFrame {
             }
         });
 
-        btnRegurnToProducts.setText("RETURN TO PRODUCTS");
-        btnRegurnToProducts.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegurnToProductsActionPerformed(evt);
-            }
-        });
-
         lblSummary.setText("Please see your purchase summary below:");
 
-        tblPurchaseSummary.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        jLabel2.setText("Order number:");
 
-            },
-            new String [] {
-                "DESCRIPTION", "SIZE", "COLOR", "QUANTITY", "PRICE"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
+        jLabel3.setText("Order date:");
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
+        jLabel4.setText("Customer email:");
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tblPurchaseSummary);
+        jLabel5.setText("Payment method:");
+
+        jLabel6.setText("Total price:");
+
+        txtOrderNumber.setEditable(false);
+        txtOrderNumber.setText("_____");
+
+        txtOrderDate.setEditable(false);
+        txtOrderDate.setText("_____");
+
+        txtCustomerEmail.setEditable(false);
+        txtCustomerEmail.setText("_____");
+
+        txtTotalPrice.setEditable(false);
+        txtTotalPrice.setText("_____");
+
+        txtPaymentMethod.setEditable(false);
+        txtPaymentMethod.setText("_____");
 
         javax.swing.GroupLayout pnlConfirmationLayout = new javax.swing.GroupLayout(pnlConfirmation);
         pnlConfirmation.setLayout(pnlConfirmationLayout);
         pnlConfirmationLayout.setHorizontalGroup(
             pnlConfirmationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlConfirmationLayout.createSequentialGroup()
-                .addComponent(btnRegurnToProducts)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnDone))
             .addGroup(pnlConfirmationLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(pnlConfirmationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlConfirmationLayout.createSequentialGroup()
-                        .addComponent(lblSummary, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addContainerGap()
+                        .addComponent(lblSummary, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlConfirmationLayout.createSequentialGroup()
+                        .addGap(52, 52, 52)
+                        .addGroup(pnlConfirmationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlConfirmationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtOrderNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                            .addComponent(txtOrderDate)
+                            .addComponent(txtCustomerEmail)
+                            .addComponent(txtPaymentMethod)
+                            .addComponent(txtTotalPrice))))
+                .addContainerGap(129, Short.MAX_VALUE))
         );
         pnlConfirmationLayout.setVerticalGroup(
             pnlConfirmationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlConfirmationLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addComponent(lblSummary)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlConfirmationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDone)
-                    .addComponent(btnRegurnToProducts)))
+                    .addComponent(jLabel2)
+                    .addComponent(txtOrderNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlConfirmationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtOrderDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlConfirmationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtCustomerEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlConfirmationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtPaymentMethod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlConfirmationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                .addComponent(btnDone))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -147,54 +174,11 @@ public class Confirmation extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void Events() {
-        /*
-         TableColumn qtyColumn = jTable1.getColumnModel().getColumn(4);
-         JComboBox comboBox = new JComboBox();
-         comboBox.addItem("1");
-         comboBox.addItem("2");
-         comboBox.addItem("3");
-         comboBox.addItem("4");
-         comboBox.addItem("5");
-         comboBox.addItem("6");
-         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-         qtyColumn.setCellEditor(new DefaultCellEditor(comboBox));
-         qtyColumn.setCellRenderer(renderer);
-         */
-
-        tblPurchaseSummary.setModel(new javax.swing.table.DefaultTableModel(
-                getselectedProducts(),
-                new String[]{
-                    "DESCRIPTION", "SIZE", "COLOR", "QUANTITY", "PRICE"
-                }) {
-            Class[] types = new Class[]{
-                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Double.class
-            };
-            boolean[] canEdit = new boolean[]{
-                true, false, false, false, true, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
-        });
-
-    }
-
     private void btnDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoneActionPerformed
-        close();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }//GEN-LAST:event_btnDoneActionPerformed
 
-    private void btnRegurnToProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegurnToProductsActionPerformed
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         close();
-        WelcomePage w = new WelcomePage();
-        w.setVisible(true);
-    }//GEN-LAST:event_btnRegurnToProductsActionPerformed
+    }//GEN-LAST:event_btnDoneActionPerformed
 
     /**
      * @param args the command line arguments
@@ -232,51 +216,30 @@ public class Confirmation extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDone;
-    private javax.swing.JButton btnRegurnToProducts;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel lblSummary;
     private javax.swing.JPanel pnlConfirmation;
-    private javax.swing.JTable tblPurchaseSummary;
+    private javax.swing.JTextField txtCustomerEmail;
+    private javax.swing.JTextField txtOrderDate;
+    private javax.swing.JTextField txtOrderNumber;
+    private javax.swing.JTextField txtPaymentMethod;
+    private javax.swing.JTextField txtTotalPrice;
     // End of variables declaration//GEN-END:variables
-    private Object[][] products = new Object[][]{
-        {new Boolean(false), "Beach T-Shirt", "L", "Purple", "1", new Double(10.5), 1},
-        {new Boolean(false), "Beach T-Shirt", "L", "Blue", "1", new Double(11.5), 2},
-        {new Boolean(false), "Beach T-Shirt", "L", "White", "1", new Double(12.5), 3},
-        {new Boolean(false), "Beach T-Shirt", "XL", "Purple", "1", new Double(13.5), 4},
-        {new Boolean(false), "Beach T-Shirt", "XL", "Blue", "1", new Double(11.5), 5},
-        {new Boolean(false), "Beach T-Shirt", "XL", "White", "1", new Double(12.5), 6},
-        {new Boolean(false), "T-Shirt", "L", "Purple", "1", new Double(10.5), 7},
-        {new Boolean(false), "T-Shirt", "L", "Blue", "1", new Double(11.5), 8},
-        {new Boolean(false), "T-Shirt", "L", "White", "1", new Double(12.5), 9},
-        {new Boolean(false), "T-Shirt", "XL", "Purple", "1", new Double(13.5), 10},
-        {new Boolean(false), "T-Shirt", "XL", "Blue", "1", new Double(11.5), 11},
-        {new Boolean(false), "T-Shirt", "XL", "White", "1", new Double(12.5), 12}
-    };
-    private Set<ProductWrapper> selectedProducts;
+    OrderSummary mSummary;
 
-    public void setselectedProducts(Set<ProductWrapper> products) {
-        selectedProducts = products;
-    }
+    void setOrderSummary(OrderSummary summary) {
+        mSummary = summary;
 
-    private Object[][] getselectedProducts() {
-//        Object[][] p = new Object[selectedProducts.length][7];
-//
-//        for (int i = 0; i < selectedProducts.length; i++) {
-//            for (int j = 0; j < products.length; j++) {
-//                if (Integer.parseInt(selectedProducts[i][1]) == (Integer) products[j][6]) {
-//                    p[i][0] = products[j][0];
-//                    p[i][1] = products[j][1];
-//                    p[i][2] = products[j][2];
-//                    p[i][3] = products[j][3];
-//                    p[i][4] = products[j][4];
-//                    p[i][5] = products[j][5];
-//                    p[i][6] = products[j][6];
-//                }
-//            }
-//        }
-//
-//        return p;
-        return null;
+        txtOrderNumber.setText(mSummary.OrderNumber);
+        txtOrderDate.setText(mSummary.OrderDate.toString());
+        txtCustomerEmail.setText(mSummary.CustomerEmail);
+        txtPaymentMethod.setText(String.format("XXXX-XXXX-XXXX-%s",
+                mSummary.PaymentMethod.getCardNumber().substring(mSummary.PaymentMethod.getCardNumber().length() - 5)));
+        txtTotalPrice.setText("$" + mSummary.RevenueTotal.toPlainString());
     }
 }

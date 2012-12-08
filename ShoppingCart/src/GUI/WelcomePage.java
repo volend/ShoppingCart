@@ -5,7 +5,9 @@
 package GUI;
 
 import Repositories.ProductRepository.Product;
+import Store.BaseFilter;
 import Store.Inventory;
+import Store.ProductSize;
 import Store.Store;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -80,9 +82,18 @@ public class WelcomePage extends javax.swing.JFrame {
         tblProducts.setModel(new ProductDataTable(true));
         jScrollPane1.setViewportView(tblProducts);
 
-        cmbSize.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "Small", "Medium", "Large", "XLarge" }));
+        cmbSize.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbSizeValueChanged(evt);
+            }
+        });
 
-        cmbColor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "Orange", "Blue", "Purple", "White" }));
+        cmbColor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "Blue", "Green", "Yellow" }));
+        cmbColor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbColorActionPerformed(evt);
+            }
+        });
 
         btnAddToCart.setText("ADD SELECTED ITEMS TO SHOPPING CART");
         btnAddToCart.addActionListener(new java.awt.event.ActionListener() {
@@ -96,6 +107,12 @@ public class WelcomePage extends javax.swing.JFrame {
         lblColor.setText("Color:");
 
         lblSearch.setText("Search...");
+
+        txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtSearchTextChanged(evt);
+            }
+        });
 
         lblAddViewErrorMessage.setBackground(new java.awt.Color(255, 255, 255));
         lblAddViewErrorMessage.setText("                ");
@@ -200,7 +217,15 @@ public class WelcomePage extends javax.swing.JFrame {
             productTable.addProduct(new ProductWrapper(product));
         }
 
+        cmbSize.addItem(ProductSize.All);
+        cmbSize.addItem(ProductSize.Small);
+        cmbSize.addItem(ProductSize.Medium);
+        cmbSize.addItem(ProductSize.Large);
+        cmbSize.addItem(ProductSize.ExtraLarge);
         shoppingCart.Initialize(this);
+
+        cmbSize.setSelectedIndex(0);
+        cmbColor.setSelectedIndex(0);
     }
 
     private void btnAddToCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddToCartActionPerformed
@@ -234,6 +259,21 @@ public class WelcomePage extends javax.swing.JFrame {
         Administrator a = new Administrator();
         a.setVisible(true);
     }//GEN-LAST:event_cbxAdminLoginActionPerformed
+
+    private void cmbSizeValueChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSizeValueChanged
+        // TODO add your handling code here:
+        updateFilters();
+    }//GEN-LAST:event_cmbSizeValueChanged
+
+    private void cmbColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbColorActionPerformed
+        // TODO add your handling code here:
+        updateFilters();
+    }//GEN-LAST:event_cmbColorActionPerformed
+
+    private void txtSearchTextChanged(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchTextChanged
+        // TODO add your handling code here:
+        updateFilters();
+    }//GEN-LAST:event_txtSearchTextChanged
 
     /**
      * @param args the command line arguments
@@ -287,4 +327,33 @@ public class WelcomePage extends javax.swing.JFrame {
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
     ShoppingCart shoppingCart = new ShoppingCart();
+
+    private void updateFilters() {
+        ProductSize selection = (ProductSize) cmbSize.getSelectedItem();
+        Inventory inventory = Store.getInstance().getInventory();
+        for (BaseFilter filter : inventory.getFilters()) {
+            inventory.removeFilter(filter);
+        }
+
+        if (selection != ProductSize.All) {
+            inventory.addFilter(BaseFilter.createSizeFilter(selection));
+        }
+
+        String color = (String) cmbColor.getSelectedItem();
+        if (!color.equals("All")) {
+            inventory.addFilter(BaseFilter.createColorFilter(color));
+        }
+
+        if (!"".equals(txtSearch.getText())) {
+            inventory.addFilter(BaseFilter.CreateQueryFilter(txtSearch.getText()));
+        }
+
+        ProductDataTable productTable = (ProductDataTable) tblProducts.getModel();
+        productTable.clearItems();
+        productTable.BeginUpdate();
+        for (Product product : inventory) {
+            productTable.addProduct(new ProductWrapper(product));
+        }
+        productTable.EndUpdate();
+    }
 }

@@ -4,8 +4,8 @@
  */
 package Store;
 
-import Repositories.ProductRepository.Product;
 import Repositories.ProductRepository.IProductRepository;
+import Repositories.ProductRepository.Product;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;

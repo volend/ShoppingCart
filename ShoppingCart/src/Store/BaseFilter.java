@@ -1,4 +1,3 @@
-
 package Store;
 
 import java.util.Arrays;
@@ -98,6 +97,9 @@ public abstract class BaseFilter {
 
         @Override
         public Boolean isMatch(String color, ProductSize size, String query) {
+            if (ProductSize == ProductSize.All) {
+                return true;
+            }
             return ProductSize == size;
         }
     }

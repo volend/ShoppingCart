@@ -359,7 +359,7 @@ public class ShoppingCart extends javax.swing.JFrame {
         mWelcomePageForm = welcomePageForm;
         tblShoppingCartProducts.setModel(new ProductDataTable(false));
     }
-
+    UserInfo mLoggedInUser;
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
 
         UserInfo userInfo = Store.getInstance().login(txtEmail.getText(), new String(txtPassword.getPassword()));
@@ -374,21 +374,29 @@ public class ShoppingCart extends javax.swing.JFrame {
             lblLoginPassword.setText("You may now checkout.");
             btnLogout.setVisible(true);
             btnCheckout.setEnabled(true);
+            mLoggedInUser = userInfo;
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnCheckoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckoutActionPerformed
-        close();
+        if (mLoggedInUser == null) {
+            JOptionPane.showMessageDialog(this, "Please login or register before checkout.");
+            return;
+        }
+
+        this.setVisible(false);
         PaymentDetails checkoutForm = new PaymentDetails();
         checkoutForm.setselectedProducts(getAddedItems());
+        checkoutForm.setShoppingCart(this);
+        checkoutForm.setLoggedInUser(mLoggedInUser);
         checkoutForm.setVisible(true);
     }//GEN-LAST:event_btnCheckoutActionPerformed
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+
+
         pnlRegister.setVisible(true);
         pnlLogin.setVisible(false);
-
-
     }//GEN-LAST:event_btnRegisterActionPerformed
     WelcomePage mWelcomePageForm;
     private void btnAddMoreProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMoreProductsActionPerformed
@@ -424,48 +432,52 @@ public class ShoppingCart extends javax.swing.JFrame {
         lblEmail.setText("Email");
         lblLoginPassword.setText("Password");
         btnLogout.setVisible(false);
+        mLoggedInUser = null;
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
 
 
-        if (txtRegisterEmail.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Please enter a valid email");
-        } else if (txtRegisterPassword.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "You must enter a password.");
-        } else if (txtRepeatPassword.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "You must re-enter your password.");
-        } else if (txtFirstName.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "You must enter your name.");
-        } else if (txtLastName.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "You must enter your last name.");
-        } else {
-            Repositories.UserRepository.UserInfo userInfo =
-                    new Repositories.UserRepository.UserInfo(txtFirstName.getText(), txtLastName.getText(),
-                    txtRegisterEmail.getText(), new String(txtRegisterPassword.getPassword()), "40009", AccessPrivileges.Limited);
+        String email = txtRegisterEmail.getText();
+        String firstName = txtFirstName.getText();
+        String lastName = txtLastName.getText();
+        String password = new String(txtRegisterPassword.getPassword());
+        String password2 = new String(txtRepeatPassword.getPassword());
 
-            //(String fName, String lName, String email, String token, String number, AccessPrivileges privileges)
+        if (password == null || password2 == null || !password.equals(password2) || password.length() == 0) {
+            JOptionPane.showMessageDialog(this, "Password fields do not match.");
+            return;
+        }
 
-            userInfo = Store.getInstance().registerUser(userInfo);
-            if (userInfo == null) {
-                JOptionPane.showMessageDialog(this, "Unable to register user. Please try using a different email address.");
-            } else {
-                pnlRegister.setVisible(false);
-                pnlLogin.setVisible(true);
+        if (email == null || email.indexOf("@") == -1) {
+            JOptionPane.showMessageDialog(this, "Email is invalid");
+            return;
+        }
 
-                btnCheckout.setEnabled(true);
+        if (firstName == null || lastName == null || firstName.length() == 0 || lastName.length() == 0) {
+            JOptionPane.showMessageDialog(this, "Invalid name");
+            return;
+        }
 
-                txtEmail.setVisible(false);
-                txtPassword.setVisible(false);
-                btnRegister.setVisible(false);
-                btnLogin.setVisible(false);
-                lblEmail.setText(String.format("Welcome %s,", userInfo.FirstName));
-                lblLoginPassword.setText("You may now checkout.");
-                btnLogout.setVisible(true);
-                btnCheckout.setEnabled(true);
-            }
+        UserInfo registerInfo = new UserInfo(firstName, lastName, email, password, "561-213-1611", AccessPrivileges.Limited);
+        registerInfo = Store.getInstance().registerUser(registerInfo);
+        if (registerInfo == null) {
+            JOptionPane.showMessageDialog(this, "Unable to register user. Please try a different email.");
+            return;
+        }
+
+        pnlRegister.setVisible(false);
+        pnlLogin.setVisible(true);
+        btnCheckout.setEnabled(true);
+        txtEmail.setVisible(false);
+        txtPassword.setVisible(false);
+        btnRegister.setVisible(false);
+        btnLogin.setVisible(false);
+        lblEmail.setText(String.format("Welcome %s,", registerInfo.FirstName));
+        lblLoginPassword.setText("You may now checkout.");
+        btnLogout.setVisible(true);
+        btnCheckout.setEnabled(true);
     }//GEN-LAST:event_btnSubmitActionPerformed
-    }
 
     /**
      * @param args the command line arguments

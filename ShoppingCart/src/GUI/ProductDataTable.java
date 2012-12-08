@@ -169,4 +169,9 @@ public class ProductDataTable extends DefaultTableModel {
             wrapper.setSelected(false);
         }
     }
+
+    void clearItems() {
+        mProducts.clear();
+        super.fireTableDataChanged();
+    }
 }

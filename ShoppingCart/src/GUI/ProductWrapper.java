@@ -24,6 +24,11 @@ public class ProductWrapper {
         mSelected = false;
     }
     
+    public Product getProduct()
+    {
+        return mWrappedProduct;
+    }
+    
     public String getColor()
     {
         return mWrappedProduct.getColor();

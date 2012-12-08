@@ -9,9 +9,9 @@ package Store;
  * @author volen
  */
 public enum ProductSize {
-
+    All,
     Small,
     Medium,
     Large,
-    ExtraLarge
+    ExtraLarge,
 }
